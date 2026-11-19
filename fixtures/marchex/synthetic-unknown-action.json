@@ -1,0 +1,57 @@
+{
+  "_fixture_note": "SYNTHETIC - hand-authored, not a real Marchex sample. Covers an unknown Action, an extra nested field, and a renamed field (CallerPhoneNumber instead of CallerNumber), per docs/DESIGN.md section 1. This key is not part of the Marchex payload shape and must be ignored by the normalizer like any other unexpected top-level field.",
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallVoicemail",
+      "AdDetails": {
+        "AdDefinitionID": 15305316,
+        "AdDefinitionName": "Heartland 844",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235233,
+        "AdvertiserName": "Heartland",
+        "ClientCode": "",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "CalledNumber": "8444476600",
+      "CallerPhoneNumber": "9995551234",
+      "OrgGroupID": 73812,
+      "OrgGroupName": "Heartland - default",
+      "OrganizationID": 5458,
+      "RouteKey": "",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "Heartland 844",
+        "StudyID": 13994891
+      },
+      "TimeZone": "Central",
+      "VoicemailDurationSeconds": 42,
+      "Extra": {
+        "Nested": {
+          "Field": true,
+          "Score": 7
+        }
+      }
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "synthetic-0001-unknown-action-0001",
+    "UTC": "2026-11-19T19:00:00.000"
+  }
+}
