@@ -1,0 +1,102 @@
+{
+  "Attempt": 1,
+  "Id": "f2f9a6c1-6a0e-4f0a-9a4b-1a2b3c4d5e6f",
+  "Notifications": [
+    {
+      "Action": "CallDetailsCustom.CallStartCall",
+      "event": "call_completed",
+      "organization_id": "5458",
+      "call_id": "",
+      "call": {
+        "start_time": "2026-11-20T16:02:50",
+        "start_time_utc": "2026-11-20T16:02:50",
+        "answer_time_utc": "",
+        "end_time_utc": "",
+        "time_zone": "Eastern",
+        "duration": "",
+        "ring_duration": "",
+        "answer_status": "",
+        "status": "processing",
+        "type": "Standard",
+        "routing_keypress": "",
+        "routing_segment": "",
+        "ai_voice_agent_routed": ""
+      },
+      "numbers": {
+        "tracking_number": "8774557300",
+        "termination_number": "",
+        "termination_extension": "",
+        "number_id": "13994877",
+        "number_name": "Main Ad Phone",
+        "number_pool_id": "",
+        "number_custom_1": "",
+        "number_custom_2": "",
+        "number_custom_3": ""
+      },
+      "account": {
+        "group_id": "15305301",
+        "group_name": "Main Ad Phone",
+        "group_custom_id": "",
+        "group_custom_1": "",
+        "group_custom_2": "",
+        "group_custom_3": "",
+        "group_custom_4": "",
+        "group_owner_id": "7235236",
+        "group_owner_name": "Atlantic Mens",
+        "group_owner_client_code": "Colt.haugen@wickedthink.com",
+        "group_owner_custom_1": "",
+        "group_owner_custom_2": "",
+        "billing_group_id": "73808",
+        "billing_group_name": "Atlantic Mens - default"
+      },
+      "caller": {
+        "number": "9542547114",
+        "name": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "country": "",
+        "line_type": ""
+      },
+      "website": {
+        "tag_data": "",
+        "tag_id": "",
+        "tag_timestamp": "",
+        "landing_page": "",
+        "referrer": "",
+        "multisession": "False"
+      },
+      "attribution": {
+        "marchex_source": "",
+        "marchex_channel": "",
+        "marchex_medium": "",
+        "marchex_paid": "",
+        "utm_source": "",
+        "utm_medium": "",
+        "utm_campaign": "",
+        "utm_term": "",
+        "utm_content": "",
+        "gclid": "",
+        "gbraid": "",
+        "wbraid": "",
+        "msclkid": "",
+        "fbclid": "",
+        "ttclid": ""
+      },
+      "outcome": {
+        "calldna": "",
+        "rescue_outcome": "",
+        "rescue_opportunity": "",
+        "conversion_count": "",
+        "conversion_value_total": "",
+        "call_tags": ""
+      }
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetailsCustom",
+    "Organization": "5458",
+    "RequestId": "ab9e5379-6747-443c-978a-d62ee6017335",
+    "UTC": "2026-11-20T16:02:50.853"
+  }
+}

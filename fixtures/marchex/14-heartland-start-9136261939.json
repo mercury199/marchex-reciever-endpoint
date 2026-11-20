@@ -1,0 +1,66 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallStartCall",
+      "AdDetails": {
+        "AdDefinitionID": 15305316,
+        "AdDefinitionName": "Heartland 844",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235233,
+        "ClientCode": null,
+        "CustomText": null,
+        "CustomText2": null
+      },
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "CallDate": "2026-11-19T18:33:42.099",
+      "CalledNumber": "8444476600",
+      "CallerDetails": {
+        "Address": null,
+        "CallerCountry": null,
+        "City": null,
+        "Email": null,
+        "Name": null,
+        "PhoneNumber": "9136261939",
+        "RichData": null,
+        "ShortZip": null,
+        "State": null,
+        "Zip": null
+      },
+      "CallerNumber": "9136261939",
+      "OrgGroupID": 73812,
+      "OrgGroupName": "Heartland - default",
+      "OrganizationID": 5458,
+      "RouteKey": "",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": null,
+        "CustomText2": null,
+        "CustomText3": null,
+        "StudyID": 13994891,
+        "StudyName": "Heartland 844"
+      },
+      "StudyPoolDetails": {
+        "Name": null,
+        "StudyPoolID": null
+      },
+      "TimeZone": "Central"
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "aaaebe65-9971-456f-959d-95f551f3f423",
+    "UTC": "2026-11-19T18:33:42.500"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallStartCall",
+      "AdDetails": {
+        "AdDefinitionID": 15305317,
+        "AdDefinitionName": "Tri state 800",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235232,
+        "ClientCode": null,
+        "CustomText": null,
+        "CustomText2": null
+      },
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "CallDate": "2026-11-19T18:27:37.11",
+      "CalledNumber": "8009009654",
+      "CallerDetails": {
+        "Address": null,
+        "CallerCountry": null,
+        "City": null,
+        "Email": null,
+        "Name": null,
+        "PhoneNumber": "6145792186",
+        "RichData": null,
+        "ShortZip": null,
+        "State": null,
+        "Zip": null
+      },
+      "CallerNumber": "6145792186",
+      "OrgGroupID": 73813,
+      "OrgGroupName": "Tri State - default",
+      "OrganizationID": 5458,
+      "RouteKey": "",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": null,
+        "CustomText2": null,
+        "CustomText3": null,
+        "StudyID": 13994892,
+        "StudyName": "Tri state 800"
+      },
+      "StudyPoolDetails": {
+        "Name": null,
+        "StudyPoolID": null
+      },
+      "TimeZone": "Eastern"
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "29e93899-37af-46cc-8c87-5476554d98d0",
+    "UTC": "2026-11-19T18:27:37.237"
+  }
+}

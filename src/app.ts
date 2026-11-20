@@ -15,6 +15,7 @@ import { registerFieldCatalogRoutes } from "./routes/api/fieldCatalog.js";
 import { registerExportRoutes } from "./routes/api/export.js";
 import { registerForwardTargetRoutes } from "./routes/api/forwardTargets.js";
 import { registerRawDeliveryRoutes } from "./routes/api/rawDeliveries.js";
+import { registerAttributionRoutes } from "./routes/api/attribution.js";
 
 export async function buildApp(db: Db, config: Config): Promise<FastifyInstance> {
   const app = Fastify({ logger: true });
@@ -52,6 +53,7 @@ export async function buildApp(db: Db, config: Config): Promise<FastifyInstance>
       registerExportRoutes(api, db);
       registerForwardTargetRoutes(api, db);
       registerRawDeliveryRoutes(api, db);
+      registerAttributionRoutes(api, db);
     },
     { prefix: "/api" },
   );

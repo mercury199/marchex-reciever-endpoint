@@ -1,0 +1,76 @@
+{
+  "logged_at": "2026-11-20T15:22:53+00:00",
+  "marchex_response": {
+    "body": {
+      "session_end_time": "2026-11-20T15:52:53.6974574Z",
+      "session_start_time": "2026-11-20T15:22:53.6974574Z",
+      "tag_ids": [
+        {
+          "tag_id": 280954332,
+          "tracking_number": "8774557300"
+        }
+      ]
+    },
+    "ok": true,
+    "status_code": 200
+  },
+  "received_from_browser": {
+    "attribution": {
+      "gclid": "Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB",
+      "utm_campaign": "19870911556",
+      "utm_content": "\u00194671090497",
+      "utm_medium": "cpc",
+      "utm_source": "google",
+      "utm_term": "4ever young fort myers"
+    },
+    "google_ads": {
+      "gclid": "Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB"
+    },
+    "landing_page": "https://atlanticmensclinic.com/?utm_source=google&utm_medium=cpc&utm_campaign=19870911556&utm_term=4ever%20young%20fort%20myers&utm_content=%194671090497&device=m&gad_source=1&gad_campaignid=19870911556&gbraid=0AAAAACdtCRbRJlZlrfeBGXviD_4cbr4wi&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB",
+    "referrer": "https://www.google.com/",
+    "session_match_period": 1800,
+    "tag_data": "visitor_id=a258e1f0-680d-46b0-a3b2-ecbe5d019933;session_id=b1a78f7e-cb68-43ee-a684-2862386d2e47;source=google",
+    "tracking_numbers": [
+      "8774557300"
+    ],
+    "website": {
+      "landing_page": "https://atlanticmensclinic.com/?utm_source=google&utm_medium=cpc&utm_campaign=19870911556&utm_term=4ever%20young%20fort%20myers&utm_content=%194671090497&device=m&gad_source=1&gad_campaignid=19870911556&gbraid=0AAAAACdtCRbRJlZlrfeBGXviD_4cbr4wi&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB",
+      "referrer": "https://www.google.com/",
+      "tag_data": "visitor_id=a258e1f0-680d-46b0-a3b2-ecbe5d019933;session_id=b1a78f7e-cb68-43ee-a684-2862386d2e47;source=google"
+    }
+  },
+  "sent_to_marchex": {
+    "attribution": {
+      "gclid": "Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB",
+      "utm_campaign": "19870911556",
+      "utm_content": "\u00194671090497",
+      "utm_medium": "cpc",
+      "utm_source": "google",
+      "utm_term": "4ever young fort myers"
+    },
+    "google_ads": {
+      "gclid": "Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB"
+    },
+    "key": "[redacted]",
+    "landing_page": "https://atlanticmensclinic.com/?utm_source=google&utm_medium=cpc&utm_campaign=19870911556&utm_term=4ever%20young%20fort%20myers&utm_content=%194671090497&device=m&gad_source=1&gad_campaignid=19870911556&gbraid=0AAAAACdtCRbRJlZlrfeBGXviD_4cbr4wi&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB",
+    "referrer": "https://www.google.com/",
+    "session_match_period": 1800,
+    "tag_data": "visitor_id=a258e1f0-680d-46b0-a3b2-ecbe5d019933;session_id=b1a78f7e-cb68-43ee-a684-2862386d2e47;source=google",
+    "tracking_numbers": [
+      "8774557300"
+    ],
+    "utm_parameters": {
+      "utm_campaign": "19870911556",
+      "utm_content": "\u00194671090497",
+      "utm_medium": "cpc",
+      "utm_source": "google",
+      "utm_term": "4ever young fort myers"
+    },
+    "website": {
+      "landing_page": "https://atlanticmensclinic.com/?utm_source=google&utm_medium=cpc&utm_campaign=19870911556&utm_term=4ever%20young%20fort%20myers&utm_content=%194671090497&device=m&gad_source=1&gad_campaignid=19870911556&gbraid=0AAAAACdtCRbRJlZlrfeBGXviD_4cbr4wi&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUXC7WsLwDv7RI8aKdrXLAFOeTkGXp2_ZJaLMpEQgHkCH6CdVbvpYMkaAjtIEALw_wcB",
+      "referrer": "https://www.google.com/",
+      "tag_data": "visitor_id=a258e1f0-680d-46b0-a3b2-ecbe5d019933;session_id=b1a78f7e-cb68-43ee-a684-2862386d2e47;source=google"
+    }
+  },
+  "site": "https://atlanticmensclinic.com"
+}

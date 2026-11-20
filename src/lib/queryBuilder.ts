@@ -38,6 +38,12 @@ const FIELD_DEFS: FieldDef[] = [
   { mongoField: "answer_utc", kind: "date", aliases: ["answer_utc"] },
   { mongoField: "monitor_start_utc", kind: "date", aliases: ["monitor_start_utc"] },
   { mongoField: "monitor_end_utc", kind: "date", aliases: ["monitor_end_utc"] },
+  // Website-click events only (lib/normalize.ts normalizeWebsiteClick); null on calls.
+  { mongoField: "site", kind: "string", aliases: ["site"] },
+  { mongoField: "landing_page", kind: "string", aliases: ["landing_page"] },
+  { mongoField: "referrer", kind: "string", aliases: ["referrer"] },
+  { mongoField: "utm_source", kind: "string", aliases: ["utm_source"] },
+  { mongoField: "utm_campaign", kind: "string", aliases: ["utm_campaign"] },
 ];
 
 const ALIAS_MAP = new Map<string, FieldDef>();

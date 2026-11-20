@@ -55,3 +55,25 @@ export async function resolveMarket(
 
   return null;
 }
+
+/**
+ * Self-filling lookup (mirrors `advertisers`) keyed by phone number instead of
+ * advertiser ID: whenever a call event resolves a market and has a called_number,
+ * record that pairing here. This is what lets a website-click event - which has no
+ * AdvertiserDetails/OrgGroupName at all, only a tracking phone number - resolve to
+ * the same market a real call to that number already resolved to.
+ */
+export async function recordTrackingNumberMarket(db: Db, trackingNumber: string, market: string): Promise<void> {
+  await db.collection("tracking_numbers").updateOne(
+    { _id: trackingNumber as unknown as never },
+    { $set: { market, updated_at: new Date() } },
+    { upsert: true },
+  );
+}
+
+export async function resolveMarketByTrackingNumber(db: Db, trackingNumbers: (string | null)[]): Promise<string | null> {
+  const candidates = trackingNumbers.filter((n): n is string => typeof n === "string" && n !== "");
+  if (candidates.length === 0) return null;
+  const found = await db.collection("tracking_numbers").findOne({ _id: { $in: candidates } as unknown as never });
+  return found && typeof found.market === "string" ? found.market : null;
+}

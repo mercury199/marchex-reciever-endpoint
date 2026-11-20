@@ -1,0 +1,51 @@
+{
+  "_fixture_note": "Hand-authored, not a real Marchex sample. Pairs with synthetic-custom-pair-processed.json: same caller/tracking_number/number_id, close start times, to test the generalized linker (lib/linker.ts) actually links a matching CallDetailsCustom.* pair - none of the real CallDetailsCustom samples supplied happen to contain a matching pair.",
+  "Attempt": 1,
+  "Id": "d1e2f3a4-b5c6-7d8e-9f0a-1b2c3d4e5f6a",
+  "Notifications": [
+    {
+      "Action": "CallDetailsCustom.CallStartCall",
+      "event": "call_completed",
+      "organization_id": "5458",
+      "call_id": "",
+      "call": {
+        "start_time": "2026-11-21T12:00:00",
+        "start_time_utc": "2026-11-21T12:00:00",
+        "answer_time_utc": "",
+        "end_time_utc": "",
+        "time_zone": "Eastern",
+        "duration": "",
+        "ring_duration": "",
+        "answer_status": "",
+        "status": "processing",
+        "type": "Standard"
+      },
+      "numbers": {
+        "tracking_number": "8775550100",
+        "number_id": "99990001",
+        "number_name": "Synthetic Test Line"
+      },
+      "account": {
+        "group_id": "99990001",
+        "group_name": "Synthetic Test Line",
+        "group_owner_id": "7235236",
+        "group_owner_name": "Atlantic Mens",
+        "billing_group_id": "73808",
+        "billing_group_name": "Atlantic Mens - default"
+      },
+      "caller": {
+        "number": "9995550199"
+      },
+      "attribution": {
+        "marchex_channel": "",
+        "marchex_paid": ""
+      }
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetailsCustom",
+    "Organization": "5458",
+    "RequestId": "d1e2f3a4-b5c6-7d8e-9f0a-1b2c3d4e5f6a",
+    "UTC": "2026-11-21T12:00:00.500"
+  }
+}

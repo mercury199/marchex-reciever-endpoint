@@ -415,3 +415,40 @@ Given `data`, walk it recursively building dot-paths:
 Everything above is implementable from the fixtures as split. No app code, `package.json`, or
 dependency has been added yet. Please review and approve before step 2 (ingest + bootstrap +
 tests) begins.
+
+## 11. Addendum: additional payload shapes (post-launch)
+
+Two more real payload shapes arrived after the initial build, both handled without changing
+`call_events`' schema - every action family normalizes into the same promoted fields (§3.2), so
+the dashboard, filter builder, and export never needed to know about the new shapes.
+
+**`CallDetailsCustom.CallStartCall` / `CallDetailsCustom.CallProcessed`** - a second Marchex
+notification family, lowercase/nested (`call`/`numbers`/`account`/`caller`/`attribution`) instead
+of the original flat PascalCase fields. `src/lib/normalize.ts`'s `normalizeCustomCall` maps it
+onto the same promoted fields: `account.group_owner_id`/`group_owner_name` play the
+AdvertiserID/AdvertiserName role for market resolution (§6, reusing `advertisers`),
+`account.billing_group_name` plays the OrgGroupName fallback role, and `numbers.number_id` plays
+the StudyID role in `call_key` (there's no StudyID equivalent otherwise). Every timestamp in this
+family is already suffixed `_utc` and taken as true UTC directly - no zone conversion, unlike the
+legacy family's `StartTime`/`EndTime`. `src/lib/linker.ts`'s start↔processed pairing (§5) is
+generalized to a per-action-type instant/counterpart lookup covering both families.
+
+**Website-click events** (`received_from_browser`/`sent_to_marchex`/`marchex_response`/`site` at
+the top level) - not a Notifications[]/Properties delivery at all, so `src/lib/payloadShape.ts`'s
+`isWebsiteClickShape` detects it in both `ingest.ts` (storage/dedupe - there's no
+Properties.RequestId, so a request id is derived from `tag_id` + `session_start_time`, falling
+back to a content hash) and `normalize.ts` (promoted fields). It gets a synthetic
+`action: "WebsiteEvent.Click"`, `called_number` is the click's tracking number, and `market` is
+resolved via a new self-filling `tracking_numbers` collection (phone number → market, populated
+the same way `advertisers` is: whenever any call event resolves a market, it upserts
+`tracking_numbers[called_number] = market`) - there's no AdvertiserDetails/OrgGroupName on a
+click to resolve from directly. Five website-click-only promoted fields were added:
+`site`, `landing_page`, `referrer`, `utm_source`, `utm_campaign` (null on every call event).
+
+**Click→call attribution** (`src/lib/attribution.ts`, `GET /api/attribution`, the dashboard's
+Attribution tab) is a deliberately separate, on-demand feature, not a stored link like §5: given
+a window (seconds) and an optional same-tracking-number requirement, it pairs each
+`WebsiteEvent.Click` with the nearest `CallStartCall` (either family) that started within the
+window, in the **same market** - a hard requirement, never relaxed - and reports "no match"
+otherwise. Nothing here is written back to `call_events`; it recomputes on every request so the
+window/toggle are freely adjustable without reprocessing data.

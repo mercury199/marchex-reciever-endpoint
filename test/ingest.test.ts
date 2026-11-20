@@ -3,6 +3,7 @@ import type { Db } from "mongodb";
 import { startTestMongo, type TestMongo } from "./helpers/mongo.js";
 import { listFixtures, readFixture } from "./helpers/fixtures.js";
 import { ingestRawDelivery, processDelivery } from "../src/ingest.js";
+import { isWebsiteClickShape } from "../src/lib/payloadShape.js";
 
 async function ingestFixture(db: Db, rawBody: string) {
   const { rawDeliveryId, duplicate } = await ingestRawDelivery(db, {
@@ -30,8 +31,10 @@ describe("ingest pipeline", () => {
     let expectedEventCount = 0;
 
     for (const fixture of fixtures) {
-      const parsed = JSON.parse(fixture.rawBody) as { Notifications: unknown[] };
-      expectedEventCount += parsed.Notifications.length;
+      const parsed = JSON.parse(fixture.rawBody) as { Notifications?: unknown[] };
+      // Website-click fixtures have no Notifications[] wrapper - the whole body is
+      // exploded as a single synthetic notification (see lib/payloadShape.ts).
+      expectedEventCount += Array.isArray(parsed.Notifications) ? parsed.Notifications.length : isWebsiteClickShape(parsed) ? 1 : 0;
       await ingestFixture(mongo.db, fixture.rawBody);
     }
 
@@ -166,5 +169,79 @@ describe("ingest pipeline", () => {
 
     const renamedFieldEntry = await db.collection("field_catalog").findOne({ path: "CallerPhoneNumber" });
     expect(renamedFieldEntry?.types_seen).toContain("string");
+  });
+
+  it("normalizes the CallDetailsCustom family and resolves market from account.group_owner_name", async () => {
+    const db = (await startTestMongo()).db;
+    const start = readFixture("21-atlantic-custom-start-9542547114.json");
+    await ingestFixture(db, start.rawBody);
+
+    const event = await db.collection("call_events").findOne({ caller_number: "9542547114" });
+    expect(event?.action).toBe("CallDetailsCustom.CallStartCall");
+    expect(event?.market).toBe("Atlantic Mens");
+    expect(event?.called_number).toBe("8774557300");
+    expect(event?.study_id).toBe(13994877);
+    expect((event?.start_utc as Date).toISOString()).toBe("2026-11-20T16:02:50.000Z");
+  });
+
+  it("does not link the CallDetailsCustom Tri State pair, since their callers differ", async () => {
+    const db = (await startTestMongo()).db;
+    const start = readFixture("23-tristate-custom-start-9379024706.json");
+    const processed = readFixture("24-tristate-custom-processed-4193573627.json");
+
+    await ingestFixture(db, start.rawBody);
+    await ingestFixture(db, processed.rawBody);
+
+    const startEvent = await db.collection("call_events").findOne({ caller_number: "9379024706" });
+    const processedEvent = await db.collection("call_events").findOne({ caller_number: "4193573627" });
+    expect(startEvent?.linked_event_id).toBeNull();
+    expect(processedEvent?.linked_event_id).toBeNull();
+  });
+
+  it("links a matching CallDetailsCustom start<->processed pair", async () => {
+    const db = (await startTestMongo()).db;
+    const start = readFixture("synthetic-custom-pair-start.json");
+    const processed = readFixture("synthetic-custom-pair-processed.json");
+
+    await ingestFixture(db, start.rawBody);
+    await ingestFixture(db, processed.rawBody);
+
+    const startEvent = await db.collection("call_events").findOne({ action: "CallDetailsCustom.CallStartCall", caller_number: "9995550199" });
+    const processedEvent = await db.collection("call_events").findOne({ action: "CallDetailsCustom.CallProcessed", caller_number: "9995550199" });
+
+    expect(startEvent?.linked_event_id).not.toBeNull();
+    expect(processedEvent?.linked_event_id).not.toBeNull();
+    expect(startEvent?.linked_event_id?.equals(processedEvent?._id)).toBe(true);
+  });
+
+  it("normalizes a website-click event and resolves its market via the tracking_numbers lookup", async () => {
+    const db = (await startTestMongo()).db;
+
+    // Seed the tracking_numbers lookup the same way production does: ingest a real
+    // call to this tracking number first, so the click can resolve market from it.
+    const call = readFixture("21-atlantic-custom-start-9542547114.json");
+    await ingestFixture(db, call.rawBody);
+
+    const click = readFixture("20-website-click-atlantic-8774557300.json");
+    await ingestFixture(db, click.rawBody);
+
+    const clickEvent = await db.collection("call_events").findOne({ action: "WebsiteEvent.Click" });
+    expect(clickEvent).not.toBeNull();
+    expect(clickEvent?.called_number).toBe("8774557300");
+    expect(clickEvent?.market).toBe("Atlantic Mens");
+    expect(clickEvent?.site).toBe("https://atlanticmensclinic.com");
+    expect(clickEvent?.utm_source).toBe("google");
+    expect((clickEvent?.start_utc as Date).toISOString()).toBe("2026-11-20T15:22:53.697Z");
+  });
+
+  it("still stores a website-click event when its tracking number has no prior market", async () => {
+    const db = (await startTestMongo()).db;
+    const click = readFixture("20-website-click-atlantic-8774557300.json");
+    const { duplicate } = await ingestFixture(db, click.rawBody);
+    expect(duplicate).toBe(false);
+
+    const clickEvent = await db.collection("call_events").findOne({ action: "WebsiteEvent.Click" });
+    expect(clickEvent?.market).toBeNull();
+    expect(clickEvent?.caller_number).toBeNull();
   });
 });

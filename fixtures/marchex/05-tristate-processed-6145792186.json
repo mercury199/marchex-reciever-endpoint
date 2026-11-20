@@ -1,0 +1,97 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallProcessed",
+      "AdDetails": {
+        "AdDefinitionID": 15305317,
+        "AdDefinitionName": "Tri state 800",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235232,
+        "AdvertiserName": "Tri State",
+        "ClientCode": "",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AnswerStatus": "Answered",
+      "AnswerStatusId": 1,
+      "AnswerTime": "2026-11-19T13:27:43",
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "BillableMinutes": null,
+      "CallSeconds": 57,
+      "CallSummary": null,
+      "CallTags": null,
+      "CallTranscript": null,
+      "CalledNumber": "8009009654",
+      "CallerAddress": null,
+      "CallerCity": null,
+      "CallerName": null,
+      "CallerNumber": "6145792186",
+      "CallerState": null,
+      "CallerStreet": null,
+      "CallerType": null,
+      "CallerZip": null,
+      "ConversationAnalytics": {},
+      "Country": null,
+      "EndTime": "2026-11-19T13:28:40",
+      "Incomplete": false,
+      "Latitude": null,
+      "Localizations": null,
+      "Longitude": null,
+      "MarketingAttribution": {
+        "Channel": "Paid Search",
+        "MatchedBy": "Static",
+        "Medium": "Other",
+        "Paid": true,
+        "Source": "Other"
+      },
+      "MonitorEndTime": "2026-11-19T18:28:40.047",
+      "MonitorStartTime": "2026-11-19T18:27:36.902",
+      "OrgGroupID": 73813,
+      "OrgGroupName": "Tri State - default",
+      "OrganizationID": 5458,
+      "RegisteredDNC": false,
+      "Rescue": null,
+      "RingCount": 2,
+      "RouteKey": "",
+      "SegmentName": "",
+      "SentimentSuite": null,
+      "StartTime": "2026-11-19T13:27:37",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "Tri state 800",
+        "StudyID": 13994892
+      },
+      "StudyPoolDetails": null,
+      "StudyPoolId": null,
+      "TelmetricsId": 2814715594,
+      "TelmetricsStudyID": 13994892,
+      "TerminationNumber": "5132986418",
+      "TerminationNumberExtension": null,
+      "TimeZone": "Eastern",
+      "VoiceMailDetected": null,
+      "VoiceRecordID": null,
+      "VoiceRecordingUrl": null,
+      "VoiceTrends": null,
+      "keyword_lists": null
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "9b7695ed-8f4c-40ce-b60e-3672257c90b9",
+    "UTC": "2026-11-19T18:28:41.896"
+  }
+}

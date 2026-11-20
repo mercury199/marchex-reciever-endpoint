@@ -1,8 +1,32 @@
+import crypto from "node:crypto";
 import { ObjectId, type Db, type WithId, type Document } from "mongodb";
 import { normalizeNotification } from "./lib/normalize.js";
 import { recordFieldCatalog } from "./lib/fieldCatalog.js";
 import { linkNewEvent } from "./lib/linker.js";
 import { enqueueForwardJobs, type EventSummary } from "./lib/forwarding.js";
+import { isWebsiteClickShape } from "./lib/payloadShape.js";
+
+/**
+ * Website-click deliveries have no Properties.RequestId to dedupe on, so a stable
+ * id is derived instead: the tag_id + session_start_time Marchex itself returned
+ * (stable across resends of the exact same click), falling back to a content hash
+ * keyed by logged_at if those are ever missing - still deterministic for an exact
+ * resend, never blocking storage if neither is present.
+ */
+function deriveWebsiteClickRequestId(obj: Record<string, unknown>): string | null {
+  const marchexResponse = obj.marchex_response as Record<string, unknown> | undefined;
+  const body = marchexResponse?.body as Record<string, unknown> | undefined;
+  const tagIds = Array.isArray(body?.tag_ids) ? (body.tag_ids as Record<string, unknown>[]) : [];
+  const tagId = tagIds[0]?.tag_id;
+  const sessionStart = typeof body?.session_start_time === "string" ? body.session_start_time : null;
+  if ((typeof tagId === "number" || typeof tagId === "string") && sessionStart) {
+    return `website:${tagId}:${sessionStart}`;
+  }
+  const loggedAt = typeof obj.logged_at === "string" ? obj.logged_at : null;
+  if (!loggedAt) return null;
+  const hash = crypto.createHash("sha1").update(JSON.stringify(obj)).digest("hex");
+  return `website:${hash}:${loggedAt}`;
+}
 
 export interface IncomingDelivery {
   headers: Record<string, string>;
@@ -36,15 +60,23 @@ export async function ingestRawDelivery(db: Db, delivery: IncomingDelivery): Pro
 
   if (parsed && typeof parsed === "object") {
     const obj = parsed as Record<string, unknown>;
-    const properties = obj.Properties as Record<string, unknown> | undefined;
-    requestId = typeof properties?.RequestId === "string" ? properties.RequestId : null;
     attempt = typeof obj.Attempt === "number" ? obj.Attempt : null;
 
-    const missing: string[] = [];
-    if (!Array.isArray(obj.Notifications)) missing.push("Notifications array");
-    if (!requestId) missing.push("Properties.RequestId");
-    if (missing.length > 0) {
-      parseError = parseError ?? `missing ${missing.join(" and ")}`;
+    if (isWebsiteClickShape(obj)) {
+      requestId = deriveWebsiteClickRequestId(obj);
+      if (!requestId) {
+        parseError = parseError ?? "website click event missing tag_id/session_start_time and logged_at";
+      }
+    } else {
+      const properties = obj.Properties as Record<string, unknown> | undefined;
+      requestId = typeof properties?.RequestId === "string" ? properties.RequestId : null;
+
+      const missing: string[] = [];
+      if (!Array.isArray(obj.Notifications)) missing.push("Notifications array");
+      if (!requestId) missing.push("Properties.RequestId");
+      if (missing.length > 0) {
+        parseError = parseError ?? `missing ${missing.join(" and ")}`;
+      }
     }
   }
 
@@ -91,9 +123,15 @@ async function explodeNotifications(
   options: { enqueueForwarding: boolean },
 ): Promise<void> {
   const parsed = JSON.parse(raw.raw_body as string) as Record<string, unknown>;
-  const notifications = parsed.Notifications;
+  // A website-click delivery has no Notifications[] wrapper at all - the whole body
+  // is treated as a single synthetic notification (see lib/payloadShape.ts).
+  const notifications: Record<string, unknown>[] = Array.isArray(parsed.Notifications)
+    ? (parsed.Notifications as Record<string, unknown>[])
+    : isWebsiteClickShape(parsed)
+      ? [parsed]
+      : [];
 
-  if (!Array.isArray(notifications)) {
+  if (notifications.length === 0) {
     if (options.enqueueForwarding) await enqueueForwardJobs(db, rawDeliveryId, []);
     return;
   }

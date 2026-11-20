@@ -1,0 +1,102 @@
+{
+  "Attempt": 1,
+  "Id": "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e",
+  "Notifications": [
+    {
+      "Action": "CallDetailsCustom.CallStartCall",
+      "event": "call_completed",
+      "organization_id": "5458",
+      "call_id": "",
+      "call": {
+        "start_time": "2026-11-20T15:57:06",
+        "start_time_utc": "2026-11-20T15:57:06",
+        "answer_time_utc": "",
+        "end_time_utc": "",
+        "time_zone": "Eastern",
+        "duration": "",
+        "ring_duration": "",
+        "answer_status": "",
+        "status": "processing",
+        "type": "Standard",
+        "routing_keypress": "",
+        "routing_segment": "",
+        "ai_voice_agent_routed": ""
+      },
+      "numbers": {
+        "tracking_number": "8009009654",
+        "termination_number": "",
+        "termination_extension": "",
+        "number_id": "13994892",
+        "number_name": "Tri state 800",
+        "number_pool_id": "",
+        "number_custom_1": "",
+        "number_custom_2": "",
+        "number_custom_3": ""
+      },
+      "account": {
+        "group_id": "15305317",
+        "group_name": "Tri state 800",
+        "group_custom_id": "",
+        "group_custom_1": "",
+        "group_custom_2": "",
+        "group_custom_3": "",
+        "group_custom_4": "",
+        "group_owner_id": "7235232",
+        "group_owner_name": "Tri State",
+        "group_owner_client_code": "",
+        "group_owner_custom_1": "",
+        "group_owner_custom_2": "",
+        "billing_group_id": "73813",
+        "billing_group_name": "Tri State - default"
+      },
+      "caller": {
+        "number": "9379024706",
+        "name": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "country": "",
+        "line_type": ""
+      },
+      "website": {
+        "tag_data": "",
+        "tag_id": "",
+        "tag_timestamp": "",
+        "landing_page": "",
+        "referrer": "",
+        "multisession": "False"
+      },
+      "attribution": {
+        "marchex_source": "",
+        "marchex_channel": "",
+        "marchex_medium": "",
+        "marchex_paid": "",
+        "utm_source": "",
+        "utm_medium": "",
+        "utm_campaign": "",
+        "utm_term": "",
+        "utm_content": "",
+        "gclid": "",
+        "gbraid": "",
+        "wbraid": "",
+        "msclkid": "",
+        "fbclid": "",
+        "ttclid": ""
+      },
+      "outcome": {
+        "calldna": "",
+        "rescue_outcome": "",
+        "rescue_opportunity": "",
+        "conversion_count": "",
+        "conversion_value_total": "",
+        "call_tags": ""
+      }
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetailsCustom",
+    "Organization": "5458",
+    "RequestId": "8e335c16-2823-486b-847d-42a89662f880",
+    "UTC": "2026-11-20T15:57:07.500"
+  }
+}

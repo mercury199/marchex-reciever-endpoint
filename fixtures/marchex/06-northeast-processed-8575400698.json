@@ -1,0 +1,97 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallProcessed",
+      "AdDetails": {
+        "AdDefinitionID": 15305271,
+        "AdDefinitionName": "Website",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235227,
+        "AdvertiserName": "North East Mens",
+        "ClientCode": "",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AnswerStatus": "Answered",
+      "AnswerStatusId": 1,
+      "AnswerTime": "2026-11-19T13:21:04",
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "BillableMinutes": null,
+      "CallSeconds": 480,
+      "CallSummary": null,
+      "CallTags": null,
+      "CallTranscript": null,
+      "CalledNumber": "8009305956",
+      "CallerAddress": null,
+      "CallerCity": null,
+      "CallerName": null,
+      "CallerNumber": "8575400698",
+      "CallerState": null,
+      "CallerStreet": null,
+      "CallerType": null,
+      "CallerZip": null,
+      "ConversationAnalytics": {},
+      "Country": null,
+      "EndTime": "2026-11-19T13:29:04",
+      "Incomplete": false,
+      "Latitude": null,
+      "Localizations": null,
+      "Longitude": null,
+      "MarketingAttribution": {
+        "Channel": "Paid Search",
+        "MatchedBy": "Static",
+        "Medium": "Other",
+        "Paid": true,
+        "Source": "Other"
+      },
+      "MonitorEndTime": "2026-11-19T18:29:03.57",
+      "MonitorStartTime": "2026-11-19T18:21:02.425",
+      "OrgGroupID": 73803,
+      "OrgGroupName": "North East Mens - default",
+      "OrganizationID": 5458,
+      "RegisteredDNC": false,
+      "Rescue": null,
+      "RingCount": 2,
+      "RouteKey": "",
+      "SegmentName": "",
+      "SentimentSuite": null,
+      "StartTime": "2026-11-19T13:21:02",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "Website",
+        "StudyID": 13994844
+      },
+      "StudyPoolDetails": null,
+      "StudyPoolId": null,
+      "TelmetricsId": 2814716031,
+      "TelmetricsStudyID": 13994844,
+      "TerminationNumber": "6172790131",
+      "TerminationNumberExtension": null,
+      "TimeZone": "Eastern",
+      "VoiceMailDetected": null,
+      "VoiceRecordID": null,
+      "VoiceRecordingUrl": null,
+      "VoiceTrends": null,
+      "keyword_lists": null
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "e835aaea-e8fa-4938-96b3-ec060b5fc1e4",
+    "UTC": "2026-11-19T18:29:07.365"
+  }
+}

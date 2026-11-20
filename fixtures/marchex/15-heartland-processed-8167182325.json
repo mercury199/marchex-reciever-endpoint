@@ -1,0 +1,97 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallProcessed",
+      "AdDetails": {
+        "AdDefinitionID": 15305316,
+        "AdDefinitionName": "Heartland 844",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235233,
+        "AdvertiserName": "Heartland",
+        "ClientCode": "",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AnswerStatus": "Answered",
+      "AnswerStatusId": 1,
+      "AnswerTime": "2026-11-19T12:33:02",
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "BillableMinutes": null,
+      "CallSeconds": 90,
+      "CallSummary": null,
+      "CallTags": null,
+      "CallTranscript": null,
+      "CalledNumber": "8444476600",
+      "CallerAddress": null,
+      "CallerCity": null,
+      "CallerName": null,
+      "CallerNumber": "8167182325",
+      "CallerState": null,
+      "CallerStreet": null,
+      "CallerType": null,
+      "CallerZip": null,
+      "ConversationAnalytics": {},
+      "Country": null,
+      "EndTime": "2026-11-19T12:34:32",
+      "Incomplete": false,
+      "Latitude": null,
+      "Localizations": null,
+      "Longitude": null,
+      "MarketingAttribution": {
+        "Channel": "Direct",
+        "MatchedBy": "Static",
+        "Medium": "Other",
+        "Paid": false,
+        "Source": "Other"
+      },
+      "MonitorEndTime": "2026-11-19T18:34:32.474",
+      "MonitorStartTime": "2026-11-19T18:32:43.995",
+      "OrgGroupID": 73812,
+      "OrgGroupName": "Heartland - default",
+      "OrganizationID": 5458,
+      "RegisteredDNC": true,
+      "Rescue": null,
+      "RingCount": 3,
+      "RouteKey": "",
+      "SegmentName": "",
+      "SentimentSuite": null,
+      "StartTime": "2026-11-19T12:32:44",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "Heartland 844",
+        "StudyID": 13994891
+      },
+      "StudyPoolDetails": null,
+      "StudyPoolId": null,
+      "TelmetricsId": 2814721732,
+      "TelmetricsStudyID": 13994891,
+      "TerminationNumber": "9132283308",
+      "TerminationNumberExtension": null,
+      "TimeZone": "Central",
+      "VoiceMailDetected": null,
+      "VoiceRecordID": null,
+      "VoiceRecordingUrl": null,
+      "VoiceTrends": null,
+      "keyword_lists": null
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "e7db1b9f-96ae-4cd1-a691-e4d58bf4f7ed",
+    "UTC": "2026-11-19T18:34:36.551"
+  }
+}

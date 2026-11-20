@@ -1,0 +1,102 @@
+{
+  "Attempt": 1,
+  "Id": "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+  "Notifications": [
+    {
+      "Action": "CallDetailsCustom.CallProcessed",
+      "event": "call_completed",
+      "organization_id": "5458",
+      "call_id": "2815175449",
+      "call": {
+        "start_time": "2026-11-20T07:56:19",
+        "start_time_utc": "2026-11-20T15:56:18",
+        "answer_time_utc": "2026-11-20T15:56:19",
+        "end_time_utc": "2026-11-20T15:58:39",
+        "time_zone": "Pacific",
+        "duration": "139",
+        "ring_duration": "2",
+        "answer_status": "answered",
+        "status": "complete",
+        "type": "Standard",
+        "routing_keypress": "",
+        "routing_segment": "",
+        "ai_voice_agent_routed": ""
+      },
+      "numbers": {
+        "tracking_number": "2399631555",
+        "termination_number": "7865687765",
+        "termination_extension": "",
+        "number_id": "15576563",
+        "number_name": "",
+        "number_pool_id": "",
+        "number_custom_1": "",
+        "number_custom_2": "",
+        "number_custom_3": ""
+      },
+      "account": {
+        "group_id": "15998059",
+        "group_name": "FL Spanish West",
+        "group_custom_id": "",
+        "group_custom_1": "",
+        "group_custom_2": "",
+        "group_custom_3": "",
+        "group_custom_4": "",
+        "group_owner_id": "7235236",
+        "group_owner_name": "Atlantic Mens",
+        "group_owner_client_code": "Colt.haugen@wickedthink.com",
+        "group_owner_custom_1": "",
+        "group_owner_custom_2": "",
+        "billing_group_id": "73808",
+        "billing_group_name": "Atlantic Mens - default"
+      },
+      "caller": {
+        "number": "2395259168",
+        "name": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "country": "",
+        "line_type": ""
+      },
+      "website": {
+        "tag_data": "",
+        "tag_id": "",
+        "tag_timestamp": "",
+        "landing_page": "",
+        "referrer": "",
+        "multisession": "False"
+      },
+      "attribution": {
+        "marchex_source": "Other",
+        "marchex_channel": "Paid Search",
+        "marchex_medium": "Other",
+        "marchex_paid": "true",
+        "utm_source": "",
+        "utm_medium": "",
+        "utm_campaign": "",
+        "utm_term": "",
+        "utm_content": "",
+        "gclid": "",
+        "gbraid": "",
+        "wbraid": "",
+        "msclkid": "",
+        "fbclid": "",
+        "ttclid": ""
+      },
+      "outcome": {
+        "calldna": "",
+        "rescue_outcome": "",
+        "rescue_opportunity": "",
+        "conversion_count": "",
+        "conversion_value_total": "",
+        "call_tags": ""
+      }
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetailsCustom",
+    "Organization": "5458",
+    "RequestId": "b69f0d29-a812-4204-9e31-f7d4f5c7de0c",
+    "UTC": "2026-11-20T15:58:43.081"
+  }
+}

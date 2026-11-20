@@ -9,6 +9,7 @@ export async function bootstrapDatabase(db: Db): Promise<void> {
   await db.createCollection("call_events").catch(ignoreExists);
   await db.createCollection("field_catalog").catch(ignoreExists);
   await db.createCollection("advertisers").catch(ignoreExists);
+  await db.createCollection("tracking_numbers").catch(ignoreExists);
   await db.createCollection("forward_targets").catch(ignoreExists);
   await db.createCollection("forward_jobs").catch(ignoreExists);
 

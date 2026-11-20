@@ -1,20 +1,50 @@
 import type { Db, ObjectId, WithId, Document } from "mongodb";
 
-const START_ACTION = "CallDetails.CallStartCall";
-const PROCESSED_ACTION = "CallDetails.CallProcessed";
+const LEGACY_START = "CallDetails.CallStartCall";
+const LEGACY_PROCESSED = "CallDetails.CallProcessed";
+const CUSTOM_START = "CallDetailsCustom.CallStartCall";
+const CUSTOM_PROCESSED = "CallDetailsCustom.CallProcessed";
 const WINDOW_MS = 2 * 60 * 1000;
 
+/**
+ * Each known action type's start/processed counterpart, per docs/DESIGN.md §5 -
+ * generalized to cover both the legacy CallDetails.* family and the newer
+ * CallDetailsCustom.* family (see lib/normalize.ts). Any other action type
+ * (including the synthetic WebsiteEvent.Click) has no counterpart here and is
+ * never linked by this function - website-click-to-call attribution is a
+ * separate, on-demand feature (lib/attribution.ts), not a stored link.
+ */
 function counterpartAction(action: string | null): string | null {
-  if (action === START_ACTION) return PROCESSED_ACTION;
-  if (action === PROCESSED_ACTION) return START_ACTION;
-  return null;
+  switch (action) {
+    case LEGACY_START:
+      return LEGACY_PROCESSED;
+    case LEGACY_PROCESSED:
+      return LEGACY_START;
+    case CUSTOM_START:
+      return CUSTOM_PROCESSED;
+    case CUSTOM_PROCESSED:
+      return CUSTOM_START;
+    default:
+      return null;
+  }
 }
 
 /** The UTC instant used for link-window comparison, per action type. */
 function linkInstant(doc: WithId<Document>): Date | null {
-  if (doc.action === START_ACTION) return doc.start_utc ?? null;
-  if (doc.action === PROCESSED_ACTION) return doc.monitor_start_utc ?? null;
-  return null;
+  switch (doc.action) {
+    case LEGACY_START:
+      return doc.start_utc ?? null;
+    case LEGACY_PROCESSED:
+      return doc.monitor_start_utc ?? null;
+    // The CallDetailsCustom family has no separate "monitor" instant - normalize.ts
+    // sets monitor_start_utc equal to start_utc on both sides of this pair, so both
+    // cases below read the same field for clarity at the call site.
+    case CUSTOM_START:
+    case CUSTOM_PROCESSED:
+      return doc.monitor_start_utc ?? null;
+    default:
+      return null;
+  }
 }
 
 /**

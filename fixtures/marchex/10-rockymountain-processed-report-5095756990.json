@@ -1,0 +1,97 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallProcessed",
+      "AdDetails": {
+        "AdDefinitionID": 15305275,
+        "AdDefinitionName": "report",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235229,
+        "AdvertiserName": "Rocky Mountain Mens",
+        "ClientCode": "",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AnswerStatus": "Answered",
+      "AnswerStatusId": 1,
+      "AnswerTime": "2026-11-19T11:11:03",
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "BillableMinutes": null,
+      "CallSeconds": 1214,
+      "CallSummary": null,
+      "CallTags": null,
+      "CallTranscript": null,
+      "CalledNumber": "8006399054",
+      "CallerAddress": null,
+      "CallerCity": null,
+      "CallerName": null,
+      "CallerNumber": "5095756990",
+      "CallerState": null,
+      "CallerStreet": null,
+      "CallerType": null,
+      "CallerZip": null,
+      "ConversationAnalytics": {},
+      "Country": null,
+      "EndTime": "2026-11-19T11:31:17",
+      "Incomplete": false,
+      "Latitude": null,
+      "Localizations": null,
+      "Longitude": null,
+      "MarketingAttribution": {
+        "Channel": "Direct",
+        "MatchedBy": "Static",
+        "Medium": "Other",
+        "Paid": false,
+        "Source": "Other"
+      },
+      "MonitorEndTime": "2026-11-19T18:31:16.834",
+      "MonitorStartTime": "2026-11-19T18:11:00.49",
+      "OrgGroupID": 73804,
+      "OrgGroupName": "Rocky Mountain Mens - default",
+      "OrganizationID": 5458,
+      "RegisteredDNC": true,
+      "Rescue": null,
+      "RingCount": 2,
+      "RouteKey": "",
+      "SegmentName": "",
+      "SentimentSuite": null,
+      "StartTime": "2026-11-19T11:11:00",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "report",
+        "StudyID": 13994850
+      },
+      "StudyPoolDetails": null,
+      "StudyPoolId": null,
+      "TelmetricsId": 2814718341,
+      "TelmetricsStudyID": 13994850,
+      "TerminationNumber": "3034811450",
+      "TerminationNumberExtension": null,
+      "TimeZone": "Mountain",
+      "VoiceMailDetected": null,
+      "VoiceRecordID": null,
+      "VoiceRecordingUrl": null,
+      "VoiceTrends": null,
+      "keyword_lists": null
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "984659f3-533a-4825-8c76-4e4915b6870a",
+    "UTC": "2026-11-19T18:31:20.871"
+  }
+}

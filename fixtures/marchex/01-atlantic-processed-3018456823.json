@@ -1,0 +1,97 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallProcessed",
+      "AdDetails": {
+        "AdDefinitionID": 15305301,
+        "AdDefinitionName": "Main Ad Phone",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235236,
+        "AdvertiserName": "Atlantic Mens",
+        "ClientCode": "Colt.haugen@wickedthink.com",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AnswerStatus": "Answered",
+      "AnswerStatusId": 1,
+      "AnswerTime": "2026-11-19T13:22:49",
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "BillableMinutes": null,
+      "CallSeconds": 195,
+      "CallSummary": null,
+      "CallTags": null,
+      "CallTranscript": null,
+      "CalledNumber": "8774557300",
+      "CallerAddress": null,
+      "CallerCity": null,
+      "CallerName": null,
+      "CallerNumber": "3018456823",
+      "CallerState": null,
+      "CallerStreet": null,
+      "CallerType": null,
+      "CallerZip": null,
+      "ConversationAnalytics": {},
+      "Country": null,
+      "EndTime": "2026-11-19T13:26:04",
+      "Incomplete": false,
+      "Latitude": null,
+      "Localizations": null,
+      "Longitude": null,
+      "MarketingAttribution": {
+        "Channel": "Paid Search",
+        "MatchedBy": "Static",
+        "Medium": "Other",
+        "Paid": true,
+        "Source": "Other"
+      },
+      "MonitorEndTime": "2026-11-19T18:26:03.71",
+      "MonitorStartTime": "2026-11-19T18:22:42.773",
+      "OrgGroupID": 73808,
+      "OrgGroupName": "Atlantic Mens - default",
+      "OrganizationID": 5458,
+      "RegisteredDNC": true,
+      "Rescue": null,
+      "RingCount": 2,
+      "RouteKey": "",
+      "SegmentName": "",
+      "SentimentSuite": null,
+      "StartTime": "2026-11-19T13:22:43",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "Main Ad Phone",
+        "StudyID": 13994877
+      },
+      "StudyPoolDetails": null,
+      "StudyPoolId": null,
+      "TelmetricsId": 2814713048,
+      "TelmetricsStudyID": 13994877,
+      "TerminationNumber": "9542482674",
+      "TerminationNumberExtension": null,
+      "TimeZone": "Eastern",
+      "VoiceMailDetected": null,
+      "VoiceRecordID": null,
+      "VoiceRecordingUrl": null,
+      "VoiceTrends": null,
+      "keyword_lists": null
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "2f1e73a6-2609-48ee-980f-d3777c000e61",
+    "UTC": "2026-11-19T18:26:05.594"
+  }
+}

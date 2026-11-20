@@ -13,8 +13,20 @@ export interface CallEvent {
   start_utc: string | null;
   linked_event_id: string | null;
   linked_request_id: string | null;
+  // Website-click events only (action: "WebsiteEvent.Click"); null on calls.
+  site: string | null;
+  landing_page: string | null;
+  referrer: string | null;
+  utm_source: string | null;
+  utm_campaign: string | null;
   data: Record<string, unknown>;
   [key: string]: unknown;
+}
+
+export interface AttributionRow {
+  click: CallEvent;
+  call: CallEvent | null;
+  deltaSeconds: number | null;
 }
 
 export interface FieldCatalogEntry {
@@ -97,6 +109,9 @@ export const api = {
   forwardJobs: (status?: string) =>
     request<{ jobs: ForwardJob[] }>(`/api/forward-jobs${status ? `?status=${status}` : ""}`),
   retryForwardJob: (id: string) => request<{ ok: boolean }>(`/api/forward-jobs/${id}/retry`, { method: "POST" }),
+
+  attribution: (params: URLSearchParams) =>
+    request<{ rows: AttributionRow[]; windowSeconds: number; requireSameNumber: boolean }>(`/api/attribution?${params.toString()}`),
 
   rawDeliveries: (params: URLSearchParams) =>
     request<{ rows: RawDelivery[]; total: number; page: number; pageSize: number }>(`/api/raw-deliveries?${params.toString()}`),

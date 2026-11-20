@@ -1,0 +1,97 @@
+{
+  "Attempt": 1,
+  "Id": "0b86f3f6-55a9-4b14-a24a-48355c95b1be",
+  "Notifications": [
+    {
+      "Action": "CallDetails.CallProcessed",
+      "AdDetails": {
+        "AdDefinitionID": 15305319,
+        "AdDefinitionName": "RMMC new Main",
+        "AdType": "Offline",
+        "CustomID": "",
+        "CustomText": "",
+        "CustomText2": "",
+        "CustomText3": "",
+        "CustomText4": ""
+      },
+      "AdvertiserDetails": {
+        "AdvertiserID": 7235229,
+        "AdvertiserName": "Rocky Mountain Mens",
+        "ClientCode": "",
+        "CustomText": "",
+        "CustomText2": ""
+      },
+      "AnswerStatus": "Answered",
+      "AnswerStatusId": 1,
+      "AnswerTime": "2026-11-19T13:25:26",
+      "AttributionDetails": {
+        "MultisessionFlag": false
+      },
+      "BillableMinutes": null,
+      "CallSeconds": 410,
+      "CallSummary": null,
+      "CallTags": null,
+      "CallTranscript": null,
+      "CalledNumber": "8773174400",
+      "CallerAddress": null,
+      "CallerCity": null,
+      "CallerName": null,
+      "CallerNumber": "3035012858",
+      "CallerState": null,
+      "CallerStreet": null,
+      "CallerType": null,
+      "CallerZip": null,
+      "ConversationAnalytics": {},
+      "Country": null,
+      "EndTime": "2026-11-19T13:32:16",
+      "Incomplete": false,
+      "Latitude": null,
+      "Localizations": null,
+      "Longitude": null,
+      "MarketingAttribution": {
+        "Channel": "Paid Search",
+        "MatchedBy": "Static",
+        "Medium": "Other",
+        "Paid": true,
+        "Source": "Other"
+      },
+      "MonitorEndTime": "2026-11-19T18:32:16.476",
+      "MonitorStartTime": "2026-11-19T18:25:21.725",
+      "OrgGroupID": 73804,
+      "OrgGroupName": "Rocky Mountain Mens - default",
+      "OrganizationID": 5458,
+      "RegisteredDNC": true,
+      "Rescue": null,
+      "RingCount": 2,
+      "RouteKey": "",
+      "SegmentName": "",
+      "SentimentSuite": null,
+      "StartTime": "2026-11-19T13:25:22",
+      "StudyDetails": {
+        "CustomID": null,
+        "CustomText": "",
+        "CustomText2": "",
+        "Name": "RMMC new Main",
+        "StudyID": 13994894
+      },
+      "StudyPoolDetails": null,
+      "StudyPoolId": null,
+      "TelmetricsId": 2814719406,
+      "TelmetricsStudyID": 13994894,
+      "TerminationNumber": "3034811450",
+      "TerminationNumberExtension": null,
+      "TimeZone": "Eastern",
+      "VoiceMailDetected": null,
+      "VoiceRecordID": null,
+      "VoiceRecordingUrl": null,
+      "VoiceTrends": null,
+      "keyword_lists": null
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetails",
+    "Organization": "5458",
+    "RequestId": "ea4cf14c-68e6-4c3e-93c6-e87d37e64d24",
+    "UTC": "2026-11-19T18:32:20.178"
+  }
+}

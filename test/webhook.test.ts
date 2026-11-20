@@ -77,4 +77,27 @@ describe("webhook HTTP route", () => {
     expect(stored?.raw_body).toBe("{not valid json at all");
     expect(stored?.parse_error).toContain("invalid JSON");
   });
+
+  it("accepts a website-click delivery, which has no Notifications[]/Properties.RequestId", async () => {
+    mongo = await startTestMongo();
+    app = await buildTestApp(mongo.db);
+    const fixture = readFixture("20-website-click-atlantic-8774557300.json");
+
+    const response = await app.inject({
+      method: "POST",
+      url: `/webhooks/marchex/${TEST_CONFIG.webhookToken}`,
+      headers: { "content-type": "application/json" },
+      payload: fixture.rawBody,
+    });
+    expect(response.statusCode).toBe(200);
+
+    const stored = await mongo.db.collection("raw_deliveries").findOne({});
+    expect(stored?.raw_body).toBe(fixture.rawBody);
+    expect(stored?.parse_error).toBeNull();
+    expect(stored?.request_id).not.toBeNull();
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const event = await mongo.db.collection("call_events").findOne({ action: "WebsiteEvent.Click" });
+    expect(event).not.toBeNull();
+  });
 });

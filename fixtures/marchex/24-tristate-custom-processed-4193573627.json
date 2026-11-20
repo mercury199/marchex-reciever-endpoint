@@ -1,0 +1,102 @@
+{
+  "Attempt": 1,
+  "Id": "c1d2e3f4-a5b6-7c8d-9e0f-1a2b3c4d5e6f",
+  "Notifications": [
+    {
+      "Action": "CallDetailsCustom.CallProcessed",
+      "event": "call_completed",
+      "organization_id": "5458",
+      "call_id": "2815170021",
+      "call": {
+        "start_time": "2026-11-20T10:52:20",
+        "start_time_utc": "2026-11-20T15:52:20",
+        "answer_time_utc": "2026-11-20T15:52:27",
+        "end_time_utc": "2026-11-20T15:53:25",
+        "time_zone": "Eastern",
+        "duration": "58",
+        "ring_duration": "2",
+        "answer_status": "answered",
+        "status": "complete",
+        "type": "Standard",
+        "routing_keypress": "",
+        "routing_segment": "",
+        "ai_voice_agent_routed": ""
+      },
+      "numbers": {
+        "tracking_number": "8009009654",
+        "termination_number": "5132986418",
+        "termination_extension": "",
+        "number_id": "13994892",
+        "number_name": "Tri state 800",
+        "number_pool_id": "",
+        "number_custom_1": "",
+        "number_custom_2": "",
+        "number_custom_3": ""
+      },
+      "account": {
+        "group_id": "15305317",
+        "group_name": "Tri state 800",
+        "group_custom_id": "",
+        "group_custom_1": "",
+        "group_custom_2": "",
+        "group_custom_3": "",
+        "group_custom_4": "",
+        "group_owner_id": "7235232",
+        "group_owner_name": "Tri State",
+        "group_owner_client_code": "",
+        "group_owner_custom_1": "",
+        "group_owner_custom_2": "",
+        "billing_group_id": "73813",
+        "billing_group_name": "Tri State - default"
+      },
+      "caller": {
+        "number": "4193573627",
+        "name": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "country": "",
+        "line_type": ""
+      },
+      "website": {
+        "tag_data": "",
+        "tag_id": "",
+        "tag_timestamp": "",
+        "landing_page": "",
+        "referrer": "",
+        "multisession": "False"
+      },
+      "attribution": {
+        "marchex_source": "Other",
+        "marchex_channel": "Paid Search",
+        "marchex_medium": "Other",
+        "marchex_paid": "true",
+        "utm_source": "",
+        "utm_medium": "",
+        "utm_campaign": "",
+        "utm_term": "",
+        "utm_content": "",
+        "gclid": "",
+        "gbraid": "",
+        "wbraid": "",
+        "msclkid": "",
+        "fbclid": "",
+        "ttclid": ""
+      },
+      "outcome": {
+        "calldna": "",
+        "rescue_outcome": "",
+        "rescue_opportunity": "",
+        "conversion_count": "",
+        "conversion_value_total": "",
+        "call_tags": ""
+      }
+    }
+  ],
+  "Properties": {
+    "CollectionType": "CallDetailsCustom",
+    "Organization": "5458",
+    "RequestId": "b4c7afda-933b-4893-84e6-45bb44452598",
+    "UTC": "2026-11-20T15:53:28.599"
+  }
+}
