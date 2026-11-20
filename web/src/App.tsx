@@ -7,8 +7,9 @@ import CallsPage from "./pages/CallsPage.js";
 import ForwardingPage from "./pages/ForwardingPage.js";
 import RawDeliveriesPage from "./pages/RawDeliveriesPage.js";
 import AttributionPage from "./pages/AttributionPage.js";
+import WebsiteEventsPage from "./pages/WebsiteEventsPage.js";
 
-export type Tab = "calls" | "forwarding" | "raw-deliveries" | "attribution";
+export type Tab = "calls" | "forwarding" | "raw-deliveries" | "attribution" | "website-events";
 
 export default function App() {
   const [tab, setTab] = useState<Tab>("calls");
@@ -33,6 +34,7 @@ export default function App() {
       {tab === "forwarding" && <ForwardingPage />}
       {tab === "raw-deliveries" && <RawDeliveriesPage />}
       {tab === "attribution" && <AttributionPage />}
+      {tab === "website-events" && <WebsiteEventsPage />}
     </Layout>
   );
 }

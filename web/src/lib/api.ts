@@ -112,6 +112,9 @@ export const api = {
 
   attribution: (params: URLSearchParams) =>
     request<{ rows: AttributionRow[]; windowSeconds: number; requireSameNumber: boolean }>(`/api/attribution?${params.toString()}`),
+  attributionSettings: () => request<{ windowSeconds: number; requireSameNumber: boolean }>("/api/settings/attribution"),
+  saveAttributionSettings: (input: { windowSeconds: number; requireSameNumber: boolean }) =>
+    request<{ ok: boolean }>("/api/settings/attribution", { method: "PUT", body: JSON.stringify(input) }),
 
   rawDeliveries: (params: URLSearchParams) =>
     request<{ rows: RawDelivery[]; total: number; page: number; pageSize: number }>(`/api/raw-deliveries?${params.toString()}`),
@@ -120,4 +123,8 @@ export const api = {
 
 export function buildExportUrl(kind: "csv" | "xlsx", params: URLSearchParams): string {
   return `/api/export.${kind}?${params.toString()}`;
+}
+
+export function buildAttributionExportUrl(params: URLSearchParams): string {
+  return `/api/attribution/export.csv?${params.toString()}`;
 }
