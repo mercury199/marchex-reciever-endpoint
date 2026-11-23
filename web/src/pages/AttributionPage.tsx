@@ -9,6 +9,12 @@ function formatTime(value: string | null): string {
   return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
 }
 
+// Mirrors ATTRIBUTION_START_ACTIONS in src/lib/attribution.ts - attribution only
+// ever matches a click against a CallStartCall event, so the Action filter here
+// offers just these two instead of every action in the field catalog (a
+// CallProcessed or WebsiteEvent.Click choice would silently match nothing).
+const START_ACTIONS = ["CallDetails.CallStartCall", "CallDetailsCustom.CallStartCall"];
+
 interface AppliedParams {
   windowSeconds: number;
   requireSameNumber: boolean;
@@ -16,6 +22,7 @@ interface AppliedParams {
   utmSource: string;
   channel: string;
   adName: string;
+  action: string;
 }
 
 export default function AttributionPage() {
@@ -28,6 +35,7 @@ export default function AttributionPage() {
   const [utmSource, setUtmSource] = useState("");
   const [channel, setChannel] = useState("");
   const [adName, setAdName] = useState("");
+  const [action, setAction] = useState("");
   const [applied, setApplied] = useState<AppliedParams | null>(null);
   const [savedMessage, setSavedMessage] = useState("");
   const [selectedCallId, setSelectedCallId] = useState<string | null>(null);
@@ -49,6 +57,7 @@ export default function AttributionPage() {
       utmSource: "",
       channel: "",
       adName: "",
+      action: "",
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsQuery.data]);
@@ -61,6 +70,7 @@ export default function AttributionPage() {
     if (params.utmSource) p.set("utmSource", params.utmSource);
     if (params.channel) p.set("channel", params.channel);
     if (params.adName) p.set("adName", params.adName);
+    if (params.action) p.set("action", params.action);
     return p;
   }
 
@@ -71,7 +81,7 @@ export default function AttributionPage() {
   });
 
   function runAttribution() {
-    setApplied({ windowSeconds, requireSameNumber, market, utmSource, channel, adName });
+    setApplied({ windowSeconds, requireSameNumber, market, utmSource, channel, adName, action });
   }
 
   async function saveAsDefault() {
@@ -90,7 +100,8 @@ export default function AttributionPage() {
       applied.market !== market ||
       applied.utmSource !== utmSource ||
       applied.channel !== channel ||
-      applied.adName !== adName);
+      applied.adName !== adName ||
+      applied.action !== action);
 
   return (
     <div>
@@ -144,6 +155,17 @@ export default function AttributionPage() {
             {filterOptionsQuery.data?.adNames.map((n) => (
               <option key={n} value={n}>
                 {n}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Action (matched call)</label>
+          <select value={action} onChange={(e) => setAction(e.target.value)}>
+            <option value="">Any CallStartCall</option>
+            {START_ACTIONS.map((a) => (
+              <option key={a} value={a}>
+                {a}
               </option>
             ))}
           </select>

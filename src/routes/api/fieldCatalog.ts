@@ -16,15 +16,17 @@ export function registerFieldCatalogRoutes(app: FastifyInstance, db: Db): void {
   app.get("/filter-options", async (_request, reply) => {
     const callEvents = db.collection("call_events");
     const nonEmpty = (field: string) => ({ [field]: { $nin: [null, ""] } });
-    const [utmSources, adNames, channels] = await Promise.all([
+    const [utmSources, adNames, channels, actions] = await Promise.all([
       callEvents.distinct("utm_source", nonEmpty("utm_source")),
       callEvents.distinct("ad_name", nonEmpty("ad_name")),
       callEvents.distinct("channel", nonEmpty("channel")),
+      callEvents.distinct("action", nonEmpty("action")),
     ]);
     reply.send({
       utmSources: (utmSources as string[]).sort(),
       adNames: (adNames as string[]).sort(),
       channels: (channels as string[]).sort(),
+      actions: (actions as string[]).sort(),
     });
   });
 }

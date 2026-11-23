@@ -61,6 +61,7 @@ export interface FilterOptions {
   utmSources: string[];
   adNames: string[];
   channels: string[];
+  actions: string[];
 }
 
 export interface FieldCatalogEntry {

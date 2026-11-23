@@ -166,6 +166,59 @@ describe("attribution utm_source/channel/ad_name filters", () => {
     const rows = await computeAttribution(mongo.db, { windowSeconds: 3600, requireSameNumber: false, adName: "Main Ad Phone" });
     expect(rows[0]?.call?.caller_number).toBe("3330000");
   });
+
+  it("action restricts candidates to a single start-action family", async () => {
+    mongo = await startTestMongo();
+    const clickTime = new Date("2026-11-21T12:00:00Z");
+    await mongo.db.collection("call_events").insertOne({
+      action: "WebsiteEvent.Click",
+      market: "Atlantic Mens",
+      called_number: "5550100",
+      start_utc: clickTime,
+      request_id: "test-click-action",
+      notification_index: 0,
+    });
+    await mongo.db.collection("call_events").insertMany([
+      {
+        action: "CallDetails.CallStartCall",
+        market: "Atlantic Mens",
+        caller_number: "5550000",
+        start_utc: new Date(clickTime.getTime() + 60_000),
+        request_id: "test-call-legacy",
+        notification_index: 0,
+      },
+      {
+        action: "CallDetailsCustom.CallStartCall",
+        market: "Atlantic Mens",
+        caller_number: "6660000",
+        start_utc: new Date(clickTime.getTime() + 30_000),
+        request_id: "test-call-custom",
+        notification_index: 0,
+      },
+    ]);
+
+    const rows = await computeAttribution(mongo.db, {
+      windowSeconds: 3600,
+      requireSameNumber: false,
+      action: "CallDetails.CallStartCall",
+    });
+    // Without the action filter, the closer CallDetailsCustom.CallStartCall (30s
+    // away) would win over the legacy one (60s away).
+    expect(rows[0]?.call?.caller_number).toBe("5550000");
+  });
+
+  it("ignores an action value outside the known start actions", async () => {
+    mongo = await startTestMongo();
+    await ingestFixture(mongo.db, readFixture("21-atlantic-custom-start-9542547114.json").rawBody);
+    await ingestFixture(mongo.db, readFixture("20-website-click-atlantic-8774557300.json").rawBody);
+
+    const rows = await computeAttribution(mongo.db, {
+      windowSeconds: 3600,
+      requireSameNumber: false,
+      action: "CallDetails.CallProcessed",
+    });
+    expect(rows[0]?.call?.caller_number).toBe("9542547114");
+  });
 });
 
 describe("attribution settings and export (HTTP)", () => {

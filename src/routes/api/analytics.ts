@@ -13,6 +13,7 @@ const DashboardQuerySchema = NumbersQuerySchema.extend({
   channel: z.string().min(1).optional(),
   utmSource: z.string().min(1).optional(),
   adName: z.string().min(1).optional(),
+  action: z.string().min(1).optional(),
   paid: z.enum(["true", "false"]).optional(),
   registeredDnc: z.enum(["true", "false"]).optional(),
 });
@@ -47,6 +48,7 @@ export function registerAnalyticsRoutes(app: FastifyInstance, db: Db): void {
       channel: query.channel,
       utmSource: query.utmSource,
       adName: query.adName,
+      action: query.action,
       paid: query.paid === undefined ? undefined : query.paid === "true",
       registeredDnc: query.registeredDnc === undefined ? undefined : query.registeredDnc === "true",
     });

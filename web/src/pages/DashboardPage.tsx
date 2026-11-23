@@ -29,6 +29,7 @@ export default function DashboardPage() {
   const [channel, setChannel] = useState("");
   const [utmSource, setUtmSource] = useState("");
   const [adName, setAdName] = useState("");
+  const [action, setAction] = useState("");
   const [paid, setPaid] = useState<"" | "true" | "false">("");
   const [registeredDnc, setRegisteredDnc] = useState<"" | "true" | "false">("");
 
@@ -43,13 +44,14 @@ export default function DashboardPage() {
     if (channel) params.set("channel", channel);
     if (utmSource) params.set("utmSource", utmSource);
     if (adName) params.set("adName", adName);
+    if (action) params.set("action", action);
     if (paid) params.set("paid", paid);
     if (registeredDnc) params.set("registeredDnc", registeredDnc);
     return params;
   }
 
   const statsQuery = useQuery({
-    queryKey: ["dashboard-stats", market, dateFrom, dateTo, channel, utmSource, adName, paid, registeredDnc],
+    queryKey: ["dashboard-stats", market, dateFrom, dateTo, channel, utmSource, adName, action, paid, registeredDnc],
     queryFn: () => api.dashboardStats(buildParams()),
   });
 
@@ -114,6 +116,17 @@ export default function DashboardPage() {
             {filterOptionsQuery.data?.channels.map((c) => (
               <option key={c} value={c}>
                 {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Action</label>
+          <select value={action} onChange={(e) => setAction(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.actions.map((a) => (
+              <option key={a} value={a}>
+                {a}
               </option>
             ))}
           </select>

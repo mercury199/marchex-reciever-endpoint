@@ -15,6 +15,7 @@ const AttributionQuerySchema = z.object({
   utmSource: z.string().min(1).optional(),
   channel: z.string().min(1).optional(),
   adName: z.string().min(1).optional(),
+  action: z.string().min(1).optional(),
   excelTab: z.enum(["true", "false"]).optional().default("false"),
 });
 
@@ -28,6 +29,7 @@ function toAttributionOptions(query: z.infer<typeof AttributionQuerySchema>): At
     utmSource: query.utmSource,
     channel: query.channel,
     adName: query.adName,
+    action: query.action,
   };
 }
 

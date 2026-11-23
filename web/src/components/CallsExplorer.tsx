@@ -48,6 +48,7 @@ export default function CallsExplorer({
   const [utmSource, setUtmSource] = useState("");
   const [adName, setAdName] = useState("");
   const [channel, setChannel] = useState("");
+  const [action, setAction] = useState("");
   const [filters, setFilters] = useState<Filter[]>([]);
   const [columns, setColumns] = useState<string[]>(defaultColumns);
   const [sort, setSort] = useState("start_utc");
@@ -66,16 +67,22 @@ export default function CallsExplorer({
     return Array.from(new Set([...defaultColumns, ...catalogPaths])).sort();
   }, [catalogQuery.data, defaultColumns]);
 
-  // UTM Source / Ad Name / Channel are dedicated dropdowns (like Market) rather
-  // than buried in the generic filter builder below, since they're common
-  // attribution dimensions users reach for constantly.
+  // The Website Events tab locks "action" via fixedFilters already - showing a
+  // second, user-editable Action dropdown there would just contradict it (two
+  // "equals" clauses on the same field can never both match).
+  const hasFixedAction = fixedFilters.some((f) => f.path === "action");
+
+  // UTM Source / Ad Name / Channel / Action are dedicated dropdowns (like
+  // Market) rather than buried in the generic filter builder below, since
+  // they're common dimensions users reach for constantly.
   const dropdownFilters = useMemo<Filter[]>(() => {
     const f: Filter[] = [];
     if (utmSource) f.push({ path: "utm_source", operator: "equals", value: utmSource });
     if (adName) f.push({ path: "ad_name", operator: "equals", value: adName });
     if (channel) f.push({ path: "channel", operator: "equals", value: channel });
+    if (action && !hasFixedAction) f.push({ path: "action", operator: "equals", value: action });
     return f;
-  }, [utmSource, adName, channel]);
+  }, [utmSource, adName, channel, action, hasFixedAction]);
 
   const allFilters = useMemo(() => [...fixedFilters, ...dropdownFilters, ...filters], [fixedFilters, dropdownFilters, filters]);
 
@@ -198,6 +205,19 @@ export default function CallsExplorer({
             ))}
           </select>
         </div>
+        {!hasFixedAction && (
+          <div className="field">
+            <label>Action</label>
+            <select value={action} onChange={(e) => { setAction(e.target.value); setPage(1); }}>
+              <option value="">Any</option>
+              {filterOptionsQuery.data?.actions.map((a) => (
+                <option key={a} value={a}>
+                  {a}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="field">
           <label>Columns</label>
           <details>

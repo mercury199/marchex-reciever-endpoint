@@ -107,4 +107,15 @@ describe("analytics", () => {
     expect(byChannel.totalEvents).toBe(1);
     expect(byChannel.byAction[0]?.action).toBe("CallDetails.CallProcessed");
   });
+
+  it("filters dashboard stats by action", async () => {
+    mongo = await startTestMongo();
+    await ingestFixture(mongo.db, readFixture("20-website-click-atlantic-8774557300.json").rawBody);
+    await ingestFixture(mongo.db, readFixture("11-atlantic-processed-6164275708.json").rawBody);
+
+    const byAction = await computeDashboardStats(mongo.db, { action: "WebsiteEvent.Click" });
+    expect(byAction.totalEvents).toBe(1);
+    expect(byAction.totalClicks).toBe(1);
+    expect(byAction.totalCalls).toBe(0);
+  });
 });

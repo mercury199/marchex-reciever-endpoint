@@ -98,6 +98,7 @@ export interface DashboardFilters extends CommonAnalyticsFilters {
   channel?: string;
   utmSource?: string;
   adName?: string;
+  action?: string;
   paid?: boolean;
   registeredDnc?: boolean;
 }
@@ -135,6 +136,7 @@ export async function computeDashboardStats(db: Db, filters: DashboardFilters): 
   const match: Filter<Document> = { ...baseMatch(filters) };
   if (filters.channel) match.channel = filters.channel;
   if (filters.utmSource) match.utm_source = filters.utmSource;
+  if (filters.action) match.action = filters.action;
   if (filters.adName) match.ad_name = filters.adName;
   if (typeof filters.paid === "boolean") match.paid = filters.paid;
   if (typeof filters.registeredDnc === "boolean") match.registered_dnc = filters.registeredDnc;

@@ -201,13 +201,15 @@ describe("API", () => {
 
     const response = await a.inject({ method: "GET", url: "/api/filter-options", headers: { cookie } });
     expect(response.statusCode).toBe(200);
-    const body = response.json() as { utmSources: string[]; adNames: string[]; channels: string[] };
+    const body = response.json() as { utmSources: string[]; adNames: string[]; channels: string[]; actions: string[] };
     expect(body.utmSources).toContain("google");
     expect(body.adNames.length).toBeGreaterThan(0);
     expect(body.channels.length).toBeGreaterThan(0);
+    expect(body.actions).toContain("WebsiteEvent.Click");
+    expect(body.actions).toContain("CallDetails.CallProcessed");
   });
 
-  it("filters /api/calls by utm_source, ad_name, and channel", async () => {
+  it("filters /api/calls by utm_source, ad_name, channel, and action", async () => {
     const { db, app: a } = await setup();
     const cookie = await loginAndGetCookie(a);
     await ingestFixture(db, "20-website-click-atlantic-8774557300.json");
@@ -226,5 +228,12 @@ describe("API", () => {
       headers: { cookie },
     });
     expect((byChannel.json() as { total: number }).total).toBe(1);
+
+    const byAction = await a.inject({
+      method: "GET",
+      url: `/api/calls?filters=${encodeURIComponent(JSON.stringify([{ path: "action", operator: "equals", value: "WebsiteEvent.Click" }]))}`,
+      headers: { cookie },
+    });
+    expect((byAction.json() as { total: number }).total).toBe(1);
   });
 });

@@ -3,6 +3,8 @@ import type { Db, Filter, Document, WithId } from "mongodb";
 const CLICK_ACTION = "WebsiteEvent.Click";
 const START_ACTIONS = ["CallDetails.CallStartCall", "CallDetailsCustom.CallStartCall"];
 
+export { START_ACTIONS as ATTRIBUTION_START_ACTIONS };
+
 export interface AttributionOptions {
   /** How far after a click a call may start and still count as a match. */
   windowSeconds: number;
@@ -13,9 +15,11 @@ export interface AttributionOptions {
   dateTo?: Date;
   /** Filters the CLICK side: the utm_source that drove the click. */
   utmSource?: string;
-  /** Filters the CALL side: the matched call's channel/ad_name. */
+  /** Filters the CALL side: the matched call's channel/ad_name/action. */
   channel?: string;
   adName?: string;
+  /** Restricts which start-action type counts as a candidate; must be one of START_ACTIONS. */
+  action?: string;
 }
 
 export interface AttributionRow {
@@ -59,8 +63,9 @@ export async function computeAttribution(db: Db, options: AttributionOptions): P
     }
 
     const clickInstant = clickStart.getTime();
+    const candidateActions = options.action && START_ACTIONS.includes(options.action) ? [options.action] : START_ACTIONS;
     const callFilter: Filter<Document> = {
-      action: { $in: START_ACTIONS },
+      action: { $in: candidateActions },
       start_utc: { $gte: new Date(clickInstant), $lte: new Date(clickInstant + windowMs) },
       // Same market is a hard requirement, not a tiebreaker - never matched when the
       // click's market is unresolved, since that would mean matching every market.
