@@ -8,11 +8,13 @@ import ForwardingPage from "./pages/ForwardingPage.js";
 import RawDeliveriesPage from "./pages/RawDeliveriesPage.js";
 import AttributionPage from "./pages/AttributionPage.js";
 import WebsiteEventsPage from "./pages/WebsiteEventsPage.js";
+import NumbersPage from "./pages/NumbersPage.js";
+import DashboardPage from "./pages/DashboardPage.js";
 
-export type Tab = "calls" | "forwarding" | "raw-deliveries" | "attribution" | "website-events";
+export type Tab = "calls" | "forwarding" | "raw-deliveries" | "attribution" | "website-events" | "numbers" | "dashboard";
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>("calls");
+  const [tab, setTab] = useState<Tab>("dashboard");
   const meQuery = useQuery({ queryKey: ["me"], queryFn: api.me });
 
   if (meQuery.isLoading) return null;
@@ -35,6 +37,8 @@ export default function App() {
       {tab === "raw-deliveries" && <RawDeliveriesPage />}
       {tab === "attribution" && <AttributionPage />}
       {tab === "website-events" && <WebsiteEventsPage />}
+      {tab === "numbers" && <NumbersPage />}
+      {tab === "dashboard" && <DashboardPage />}
     </Layout>
   );
 }

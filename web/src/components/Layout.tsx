@@ -4,11 +4,13 @@ import { api } from "../lib/api.js";
 import type { Tab } from "../App.js";
 
 const TABS: { id: Tab; label: string }[] = [
+  { id: "dashboard", label: "Dashboard" },
   { id: "calls", label: "Calls" },
-  { id: "forwarding", label: "Forwarding" },
-  { id: "raw-deliveries", label: "Raw Deliveries" },
+  { id: "numbers", label: "Numbers" },
   { id: "website-events", label: "Website Events" },
   { id: "attribution", label: "Attribution" },
+  { id: "forwarding", label: "Forwarding" },
+  { id: "raw-deliveries", label: "Raw Deliveries" },
 ];
 
 export default function Layout({

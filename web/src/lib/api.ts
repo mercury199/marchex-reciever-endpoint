@@ -29,6 +29,34 @@ export interface AttributionRow {
   deltaSeconds: number | null;
 }
 
+export interface NumberBreakdownRow {
+  calledNumber: string;
+  market: string | null;
+  adName: string | null;
+  totalCalls: number;
+  avgCallSeconds: number | null;
+  answeredCalls: number;
+  answeredPercent: number | null;
+  hourlyCounts: number[];
+  peakHour: number | null;
+}
+
+export interface DashboardStats {
+  totalEvents: number;
+  totalCalls: number;
+  totalClicks: number;
+  linking: { total: number; linked: number; percentage: number | null };
+  byMarket: { market: string; count: number }[];
+  byAction: { action: string; count: number }[];
+  byDay: { date: string; count: number }[];
+  byHour: number[];
+  byChannel: { channel: string; count: number }[];
+  callLength: { avgSeconds: number | null; maxSeconds: number | null; count: number };
+  answerStatus: { status: string; count: number }[];
+  paidBreakdown: { paid: boolean; count: number }[];
+  dncBreakdown: { registeredDnc: boolean; count: number }[];
+}
+
 export interface FieldCatalogEntry {
   path: string;
   types_seen: string[];
@@ -115,6 +143,10 @@ export const api = {
   attributionSettings: () => request<{ windowSeconds: number; requireSameNumber: boolean }>("/api/settings/attribution"),
   saveAttributionSettings: (input: { windowSeconds: number; requireSameNumber: boolean }) =>
     request<{ ok: boolean }>("/api/settings/attribution", { method: "PUT", body: JSON.stringify(input) }),
+
+  numberBreakdown: (params: URLSearchParams) =>
+    request<{ rows: NumberBreakdownRow[] }>(`/api/analytics/numbers?${params.toString()}`),
+  dashboardStats: (params: URLSearchParams) => request<DashboardStats>(`/api/analytics/dashboard?${params.toString()}`),
 
   rawDeliveries: (params: URLSearchParams) =>
     request<{ rows: RawDelivery[]; total: number; page: number; pageSize: number }>(`/api/raw-deliveries?${params.toString()}`),
