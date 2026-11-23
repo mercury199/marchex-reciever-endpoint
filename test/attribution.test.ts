@@ -73,6 +73,101 @@ describe("website-click attribution (best estimate, never stored)", () => {
   });
 });
 
+describe("attribution utm_source/channel/ad_name filters", () => {
+  let mongo: TestMongo;
+
+  afterEach(async () => {
+    await mongo?.stop();
+  });
+
+  it("utmSource only considers clicks from that source", async () => {
+    mongo = await startTestMongo();
+    const base = { market: "Atlantic Mens", called_number: "5550100", start_utc: new Date("2026-11-21T12:00:00Z"), action: "WebsiteEvent.Click" };
+    await mongo.db.collection("call_events").insertMany([
+      { ...base, request_id: "test-google", notification_index: 0, utm_source: "google" },
+      { ...base, request_id: "test-bing", notification_index: 0, utm_source: "bing" },
+    ]);
+
+    const rows = await computeAttribution(mongo.db, { windowSeconds: 3600, requireSameNumber: false, utmSource: "bing" });
+    expect(rows).toHaveLength(1);
+    expect(rows[0]?.click.utm_source).toBe("bing");
+  });
+
+  it("channel only matches a candidate call with that channel", async () => {
+    mongo = await startTestMongo();
+    const clickTime = new Date("2026-11-21T12:00:00Z");
+    await mongo.db.collection("call_events").insertOne({
+      action: "WebsiteEvent.Click",
+      market: "Atlantic Mens",
+      called_number: "5550100",
+      start_utc: clickTime,
+      request_id: "test-click-channel",
+      notification_index: 0,
+    });
+    await mongo.db.collection("call_events").insertMany([
+      {
+        action: "CallDetails.CallStartCall",
+        market: "Atlantic Mens",
+        caller_number: "1110000",
+        channel: "Paid Search",
+        start_utc: new Date(clickTime.getTime() + 60_000),
+        request_id: "test-call-paid-search",
+        notification_index: 0,
+      },
+      {
+        action: "CallDetails.CallStartCall",
+        market: "Atlantic Mens",
+        caller_number: "2220000",
+        channel: "Organic",
+        start_utc: new Date(clickTime.getTime() + 30_000),
+        request_id: "test-call-organic",
+        notification_index: 0,
+      },
+    ]);
+
+    const rows = await computeAttribution(mongo.db, { windowSeconds: 3600, requireSameNumber: false, channel: "Paid Search" });
+    // Without the channel filter, the Organic call (30s away) would win over the
+    // Paid Search call (60s away) as the nearer candidate.
+    expect(rows[0]?.call?.caller_number).toBe("1110000");
+  });
+
+  it("adName only matches a candidate call with that ad name", async () => {
+    mongo = await startTestMongo();
+    const clickTime = new Date("2026-11-21T12:00:00Z");
+    await mongo.db.collection("call_events").insertOne({
+      action: "WebsiteEvent.Click",
+      market: "Atlantic Mens",
+      called_number: "5550100",
+      start_utc: clickTime,
+      request_id: "test-click-adname",
+      notification_index: 0,
+    });
+    await mongo.db.collection("call_events").insertMany([
+      {
+        action: "CallDetails.CallStartCall",
+        market: "Atlantic Mens",
+        caller_number: "3330000",
+        ad_name: "Main Ad Phone",
+        start_utc: new Date(clickTime.getTime() + 60_000),
+        request_id: "test-call-main",
+        notification_index: 0,
+      },
+      {
+        action: "CallDetails.CallStartCall",
+        market: "Atlantic Mens",
+        caller_number: "4440000",
+        ad_name: "Secondary Line",
+        start_utc: new Date(clickTime.getTime() + 30_000),
+        request_id: "test-call-secondary",
+        notification_index: 0,
+      },
+    ]);
+
+    const rows = await computeAttribution(mongo.db, { windowSeconds: 3600, requireSameNumber: false, adName: "Main Ad Phone" });
+    expect(rows[0]?.call?.caller_number).toBe("3330000");
+  });
+});
+
 describe("attribution settings and export (HTTP)", () => {
   let mongo: TestMongo;
   let app: FastifyInstance;

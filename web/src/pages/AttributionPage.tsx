@@ -13,6 +13,9 @@ interface AppliedParams {
   windowSeconds: number;
   requireSameNumber: boolean;
   market: string;
+  utmSource: string;
+  channel: string;
+  adName: string;
 }
 
 export default function AttributionPage() {
@@ -22,11 +25,15 @@ export default function AttributionPage() {
   const [windowSeconds, setWindowSeconds] = useState(1800);
   const [requireSameNumber, setRequireSameNumber] = useState(false);
   const [market, setMarket] = useState("");
+  const [utmSource, setUtmSource] = useState("");
+  const [channel, setChannel] = useState("");
+  const [adName, setAdName] = useState("");
   const [applied, setApplied] = useState<AppliedParams | null>(null);
   const [savedMessage, setSavedMessage] = useState("");
   const [selectedCallId, setSelectedCallId] = useState<string | null>(null);
 
   const marketsQuery = useQuery({ queryKey: ["markets"], queryFn: api.markets });
+  const filterOptionsQuery = useQuery({ queryKey: ["filter-options"], queryFn: api.filterOptions });
   const settingsQuery = useQuery({ queryKey: ["attribution-settings"], queryFn: api.attributionSettings });
 
   // Seed the draft controls (and run the first query) from the saved default
@@ -35,7 +42,14 @@ export default function AttributionPage() {
     if (!settingsQuery.data || applied) return;
     setWindowSeconds(settingsQuery.data.windowSeconds);
     setRequireSameNumber(settingsQuery.data.requireSameNumber);
-    setApplied({ windowSeconds: settingsQuery.data.windowSeconds, requireSameNumber: settingsQuery.data.requireSameNumber, market: "" });
+    setApplied({
+      windowSeconds: settingsQuery.data.windowSeconds,
+      requireSameNumber: settingsQuery.data.requireSameNumber,
+      market: "",
+      utmSource: "",
+      channel: "",
+      adName: "",
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsQuery.data]);
 
@@ -44,6 +58,9 @@ export default function AttributionPage() {
     p.set("windowSeconds", String(params.windowSeconds));
     p.set("requireSameNumber", String(params.requireSameNumber));
     if (params.market) p.set("market", params.market);
+    if (params.utmSource) p.set("utmSource", params.utmSource);
+    if (params.channel) p.set("channel", params.channel);
+    if (params.adName) p.set("adName", params.adName);
     return p;
   }
 
@@ -54,7 +71,7 @@ export default function AttributionPage() {
   });
 
   function runAttribution() {
-    setApplied({ windowSeconds, requireSameNumber, market });
+    setApplied({ windowSeconds, requireSameNumber, market, utmSource, channel, adName });
   }
 
   async function saveAsDefault() {
@@ -67,7 +84,13 @@ export default function AttributionPage() {
   const rows = attributionQuery.data?.rows ?? [];
   const matchedCount = rows.filter((r) => r.call !== null).length;
   const isDirty =
-    applied !== null && (applied.windowSeconds !== windowSeconds || applied.requireSameNumber !== requireSameNumber || applied.market !== market);
+    applied !== null &&
+    (applied.windowSeconds !== windowSeconds ||
+      applied.requireSameNumber !== requireSameNumber ||
+      applied.market !== market ||
+      applied.utmSource !== utmSource ||
+      applied.channel !== channel ||
+      applied.adName !== adName);
 
   return (
     <div>
@@ -88,6 +111,39 @@ export default function AttributionPage() {
             {marketsQuery.data?.markets.map((m) => (
               <option key={m} value={m}>
                 {m}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>UTM Source (click)</label>
+          <select value={utmSource} onChange={(e) => setUtmSource(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.utmSources.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Channel (matched call)</label>
+          <select value={channel} onChange={(e) => setChannel(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.channels.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Ad Name (matched call)</label>
+          <select value={adName} onChange={(e) => setAdName(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.adNames.map((n) => (
+              <option key={n} value={n}>
+                {n}
               </option>
             ))}
           </select>

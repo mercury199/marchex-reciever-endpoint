@@ -45,6 +45,9 @@ export default function CallsExplorer({
   const [market, setMarket] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [utmSource, setUtmSource] = useState("");
+  const [adName, setAdName] = useState("");
+  const [channel, setChannel] = useState("");
   const [filters, setFilters] = useState<Filter[]>([]);
   const [columns, setColumns] = useState<string[]>(defaultColumns);
   const [sort, setSort] = useState("start_utc");
@@ -56,13 +59,25 @@ export default function CallsExplorer({
 
   const catalogQuery = useQuery({ queryKey: ["field-catalog"], queryFn: api.fieldCatalog });
   const marketsQuery = useQuery({ queryKey: ["markets"], queryFn: api.markets });
+  const filterOptionsQuery = useQuery({ queryKey: ["filter-options"], queryFn: api.filterOptions });
 
   const availablePaths = useMemo(() => {
     const catalogPaths = catalogQuery.data?.entries.map((e) => e.path) ?? [];
     return Array.from(new Set([...defaultColumns, ...catalogPaths])).sort();
   }, [catalogQuery.data, defaultColumns]);
 
-  const allFilters = useMemo(() => [...fixedFilters, ...filters], [fixedFilters, filters]);
+  // UTM Source / Ad Name / Channel are dedicated dropdowns (like Market) rather
+  // than buried in the generic filter builder below, since they're common
+  // attribution dimensions users reach for constantly.
+  const dropdownFilters = useMemo<Filter[]>(() => {
+    const f: Filter[] = [];
+    if (utmSource) f.push({ path: "utm_source", operator: "equals", value: utmSource });
+    if (adName) f.push({ path: "ad_name", operator: "equals", value: adName });
+    if (channel) f.push({ path: "channel", operator: "equals", value: channel });
+    return f;
+  }, [utmSource, adName, channel]);
+
+  const allFilters = useMemo(() => [...fixedFilters, ...dropdownFilters, ...filters], [fixedFilters, dropdownFilters, filters]);
 
   function buildListParams(): URLSearchParams {
     const params = new URLSearchParams();
@@ -149,6 +164,39 @@ export default function CallsExplorer({
         <div className="field">
           <label>To</label>
           <input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }} />
+        </div>
+        <div className="field">
+          <label>UTM Source</label>
+          <select value={utmSource} onChange={(e) => { setUtmSource(e.target.value); setPage(1); }}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.utmSources.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Ad Name</label>
+          <select value={adName} onChange={(e) => { setAdName(e.target.value); setPage(1); }}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.adNames.map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Channel</label>
+          <select value={channel} onChange={(e) => { setChannel(e.target.value); setPage(1); }}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.channels.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="field">
           <label>Columns</label>

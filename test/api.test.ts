@@ -192,4 +192,39 @@ describe("API", () => {
     const afterCount = await db.collection("call_events").countDocuments({ raw_delivery_id: rawDeliveryId });
     expect(afterCount).toBe(beforeCount);
   });
+
+  it("returns distinct utm_source/ad_name/channel values for the filter dropdowns", async () => {
+    const { db, app: a } = await setup();
+    const cookie = await loginAndGetCookie(a);
+    await ingestFixture(db, "20-website-click-atlantic-8774557300.json");
+    await ingestFixture(db, "11-atlantic-processed-6164275708.json");
+
+    const response = await a.inject({ method: "GET", url: "/api/filter-options", headers: { cookie } });
+    expect(response.statusCode).toBe(200);
+    const body = response.json() as { utmSources: string[]; adNames: string[]; channels: string[] };
+    expect(body.utmSources).toContain("google");
+    expect(body.adNames.length).toBeGreaterThan(0);
+    expect(body.channels.length).toBeGreaterThan(0);
+  });
+
+  it("filters /api/calls by utm_source, ad_name, and channel", async () => {
+    const { db, app: a } = await setup();
+    const cookie = await loginAndGetCookie(a);
+    await ingestFixture(db, "20-website-click-atlantic-8774557300.json");
+    await ingestFixture(db, "11-atlantic-processed-6164275708.json");
+
+    const byUtmSource = await a.inject({
+      method: "GET",
+      url: `/api/calls?filters=${encodeURIComponent(JSON.stringify([{ path: "utm_source", operator: "equals", value: "google" }]))}`,
+      headers: { cookie },
+    });
+    expect((byUtmSource.json() as { total: number }).total).toBe(1);
+
+    const byChannel = await a.inject({
+      method: "GET",
+      url: `/api/calls?filters=${encodeURIComponent(JSON.stringify([{ path: "channel", operator: "equals", value: "Paid Search" }]))}`,
+      headers: { cookie },
+    });
+    expect((byChannel.json() as { total: number }).total).toBe(1);
+  });
 });

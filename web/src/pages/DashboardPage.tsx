@@ -27,10 +27,13 @@ export default function DashboardPage() {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [channel, setChannel] = useState("");
+  const [utmSource, setUtmSource] = useState("");
+  const [adName, setAdName] = useState("");
   const [paid, setPaid] = useState<"" | "true" | "false">("");
   const [registeredDnc, setRegisteredDnc] = useState<"" | "true" | "false">("");
 
   const marketsQuery = useQuery({ queryKey: ["markets"], queryFn: api.markets });
+  const filterOptionsQuery = useQuery({ queryKey: ["filter-options"], queryFn: api.filterOptions });
 
   function buildParams(): URLSearchParams {
     const params = new URLSearchParams();
@@ -38,13 +41,15 @@ export default function DashboardPage() {
     if (dateFrom) params.set("dateFrom", new Date(dateFrom).toISOString());
     if (dateTo) params.set("dateTo", new Date(dateTo).toISOString());
     if (channel) params.set("channel", channel);
+    if (utmSource) params.set("utmSource", utmSource);
+    if (adName) params.set("adName", adName);
     if (paid) params.set("paid", paid);
     if (registeredDnc) params.set("registeredDnc", registeredDnc);
     return params;
   }
 
   const statsQuery = useQuery({
-    queryKey: ["dashboard-stats", market, dateFrom, dateTo, channel, paid, registeredDnc],
+    queryKey: ["dashboard-stats", market, dateFrom, dateTo, channel, utmSource, adName, paid, registeredDnc],
     queryFn: () => api.dashboardStats(buildParams()),
   });
 
@@ -81,13 +86,37 @@ export default function DashboardPage() {
           <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
         </div>
         <div className="field">
+          <label>UTM Source</label>
+          <select value={utmSource} onChange={(e) => setUtmSource(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.utmSources.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label>Ad Name</label>
+          <select value={adName} onChange={(e) => setAdName(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.adNames.map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
           <label>Channel</label>
-          <input
-            type="text"
-            placeholder="e.g. Paid Search, google"
-            value={channel}
-            onChange={(e) => setChannel(e.target.value)}
-          />
+          <select value={channel} onChange={(e) => setChannel(e.target.value)}>
+            <option value="">Any</option>
+            {filterOptionsQuery.data?.channels.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="field">
           <label>Paid</label>

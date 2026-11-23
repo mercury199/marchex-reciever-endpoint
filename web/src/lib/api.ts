@@ -57,6 +57,12 @@ export interface DashboardStats {
   dncBreakdown: { registeredDnc: boolean; count: number }[];
 }
 
+export interface FilterOptions {
+  utmSources: string[];
+  adNames: string[];
+  channels: string[];
+}
+
 export interface FieldCatalogEntry {
   path: string;
   types_seen: string[];
@@ -122,6 +128,7 @@ export const api = {
   health: () => request<{ status: string; mongo: string; timestamp: string }>("/health"),
 
   markets: () => request<{ markets: string[] }>("/api/markets"),
+  filterOptions: () => request<FilterOptions>("/api/filter-options"),
   fieldCatalog: () => request<{ entries: FieldCatalogEntry[] }>("/api/field-catalog"),
 
   calls: (params: URLSearchParams) =>

@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import type { Db } from "mongodb";
 import { z } from "zod";
-import { computeAttribution } from "../../lib/attribution.js";
+import { computeAttribution, type AttributionOptions } from "../../lib/attribution.js";
 import { csvEscape, csvPhoneCell } from "../../lib/csv.js";
 
 const AttributionQuerySchema = z.object({
@@ -12,8 +12,24 @@ const AttributionQuerySchema = z.object({
   market: z.string().min(1).optional(),
   dateFrom: z.string().optional(),
   dateTo: z.string().optional(),
+  utmSource: z.string().min(1).optional(),
+  channel: z.string().min(1).optional(),
+  adName: z.string().min(1).optional(),
   excelTab: z.enum(["true", "false"]).optional().default("false"),
 });
+
+function toAttributionOptions(query: z.infer<typeof AttributionQuerySchema>): AttributionOptions {
+  return {
+    windowSeconds: query.windowSeconds,
+    requireSameNumber: query.requireSameNumber === "true",
+    market: query.market,
+    dateFrom: query.dateFrom ? new Date(query.dateFrom) : undefined,
+    dateTo: query.dateTo ? new Date(query.dateTo) : undefined,
+    utmSource: query.utmSource,
+    channel: query.channel,
+    adName: query.adName,
+  };
+}
 
 export function registerAttributionRoutes(app: FastifyInstance, db: Db): void {
   app.get("/attribution", async (request, reply) => {
@@ -23,17 +39,9 @@ export function registerAttributionRoutes(app: FastifyInstance, db: Db): void {
       return;
     }
     const query = parsed.data;
-    const requireSameNumber = query.requireSameNumber === "true";
+    const rows = await computeAttribution(db, toAttributionOptions(query));
 
-    const rows = await computeAttribution(db, {
-      windowSeconds: query.windowSeconds,
-      requireSameNumber,
-      market: query.market,
-      dateFrom: query.dateFrom ? new Date(query.dateFrom) : undefined,
-      dateTo: query.dateTo ? new Date(query.dateTo) : undefined,
-    });
-
-    reply.send({ rows, windowSeconds: query.windowSeconds, requireSameNumber });
+    reply.send({ rows, windowSeconds: query.windowSeconds, requireSameNumber: query.requireSameNumber === "true" });
   });
 
   const EXPORT_COLUMNS = [
@@ -65,13 +73,7 @@ export function registerAttributionRoutes(app: FastifyInstance, db: Db): void {
     const query = parsed.data;
     const excelTab = query.excelTab === "true";
 
-    const rows = await computeAttribution(db, {
-      windowSeconds: query.windowSeconds,
-      requireSameNumber: query.requireSameNumber === "true",
-      market: query.market,
-      dateFrom: query.dateFrom ? new Date(query.dateFrom) : undefined,
-      dateTo: query.dateTo ? new Date(query.dateTo) : undefined,
-    });
+    const rows = await computeAttribution(db, toAttributionOptions(query));
 
     reply.hijack();
     reply.raw.writeHead(200, {

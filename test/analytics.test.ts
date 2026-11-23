@@ -90,4 +90,21 @@ describe("analytics", () => {
     expect(stats.linking.percentage).toBeNull();
     expect(stats.byHour).toEqual(new Array(24).fill(0));
   });
+
+  it("filters dashboard stats by utm_source, ad_name, and channel", async () => {
+    mongo = await startTestMongo();
+    await ingestFixture(mongo.db, readFixture("20-website-click-atlantic-8774557300.json").rawBody);
+    await ingestFixture(mongo.db, readFixture("11-atlantic-processed-6164275708.json").rawBody);
+
+    const byUtmSource = await computeDashboardStats(mongo.db, { utmSource: "google" });
+    expect(byUtmSource.totalEvents).toBe(1);
+    expect(byUtmSource.byAction[0]?.action).toBe("WebsiteEvent.Click");
+
+    const byAdName = await computeDashboardStats(mongo.db, { adName: "Main Ad Phone" });
+    expect(byAdName.totalEvents).toBe(1);
+
+    const byChannel = await computeDashboardStats(mongo.db, { channel: "Paid Search" });
+    expect(byChannel.totalEvents).toBe(1);
+    expect(byChannel.byAction[0]?.action).toBe("CallDetails.CallProcessed");
+  });
 });

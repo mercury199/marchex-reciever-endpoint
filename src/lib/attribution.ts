@@ -11,6 +11,11 @@ export interface AttributionOptions {
   market?: string;
   dateFrom?: Date;
   dateTo?: Date;
+  /** Filters the CLICK side: the utm_source that drove the click. */
+  utmSource?: string;
+  /** Filters the CALL side: the matched call's channel/ad_name. */
+  channel?: string;
+  adName?: string;
 }
 
 export interface AttributionRow {
@@ -34,6 +39,7 @@ export async function computeAttribution(db: Db, options: AttributionOptions): P
 
   const clickFilter: Filter<Document> = { action: CLICK_ACTION };
   if (options.market) clickFilter.market = options.market;
+  if (options.utmSource) clickFilter.utm_source = options.utmSource;
   if (options.dateFrom || options.dateTo) {
     const range: Record<string, Date> = {};
     if (options.dateFrom) range.$gte = options.dateFrom;
@@ -61,6 +67,8 @@ export async function computeAttribution(db: Db, options: AttributionOptions): P
       market: click.market ?? null,
     };
     if (options.requireSameNumber) callFilter.called_number = click.called_number ?? null;
+    if (options.channel) callFilter.channel = options.channel;
+    if (options.adName) callFilter.ad_name = options.adName;
 
     const candidates = await callEvents.find(callFilter).toArray();
     let best: WithId<Document> | null = null;
